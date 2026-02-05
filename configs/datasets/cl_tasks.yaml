@@ -1,0 +1,43 @@
+# Continual Learning Tasks Configuration for VeRi-776
+continual_learning:
+  scenario: "class_incremental"  # New vehicle IDs over time
+  num_tasks: 4
+  
+  # Task splits based on camera deployment timeline
+  task_splits:
+    task_1:
+      description: "Initial deployment - Cameras 1-5"
+      cameras: [1, 2, 3, 4, 5]
+      vehicle_ids: []  # Will be populated automatically
+      
+    task_2: 
+      description: "Expansion phase 1 - Cameras 6-10"
+      cameras: [6, 7, 8, 9, 10]
+      vehicle_ids: []
+      
+    task_3:
+      description: "Expansion phase 2 - Cameras 11-15"  
+      cameras: [11, 12, 13, 14, 15]
+      vehicle_ids: []
+      
+    task_4:
+      description: "Final deployment - Cameras 16-20"
+      cameras: [16, 17, 18, 19, 20]
+      vehicle_ids: []
+  
+  # Memory buffer for rehearsal
+  memory_buffer:
+    size_per_task: 500  # 500 images per previous task
+    selection_strategy: "random"  # random, herding, or centroid
+    
+  # Evaluation protocol
+  evaluation:
+    metrics: ["accuracy", "forgetting", "intransigence"]
+    test_on_all_tasks: true
+    save_confusion_matrix: true
+    
+  # Forgetting analysis
+  forgetting_analysis:
+    track_performance: true
+    save_curves: true
+    compute_average_forgetting: true

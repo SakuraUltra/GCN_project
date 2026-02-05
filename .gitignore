@@ -1,0 +1,39 @@
+._*
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.env
+
+# Jupyter
+.ipynb_checkpoints
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Ignore contents of large folders but allow git to traverse them to find logs
+data/**
+outputs/**
+results/**
+tf-logs/**
+
+# Un-ignore directories so logs can be found
+!data/**/
+!outputs/**/
+!results/**/
+!tf-logs/**/
+
+# Exclude large model weights even if they are not in above folders
+*.pth
+*.pt
+*.ckpt
+*.onnx
+
+# Explicitly keep logs everywhere
+!*.log

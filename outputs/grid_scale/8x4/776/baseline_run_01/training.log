@@ -1,0 +1,189 @@
+2026-01-30 11:24:08,178 - BoT-Training - INFO - ================================================================================
+2026-01-30 11:24:08,178 - BoT-Training - INFO - 🚀 Starting BoT-Baseline Training Session
+2026-01-30 11:24:08,178 - BoT-Training - INFO - ================================================================================
+2026-01-30 11:24:08,178 - BoT-Training - INFO - 📋 Training Configuration:
+2026-01-30 11:24:08,178 - BoT-Training - INFO -    • Config File: configs/baseline_configs/bot_baseline.yaml
+2026-01-30 11:24:08,178 - BoT-Training - INFO -    • Total Epochs: 120
+2026-01-30 11:24:08,179 - BoT-Training - INFO -    • Output Directory: ./outputs/grid_scale/8x4/776/baseline_run_01
+2026-01-30 11:24:08,179 - BoT-Training - INFO -    • Log File: ./outputs/grid_scale/8x4/776/baseline_run_01/training.log
+2026-01-30 11:24:08,179 - BoT-Training - INFO -    • Session Time: 2026-01-30 11:24:08
+2026-01-30 11:24:08,259 - BoT-Training - INFO - Using device: cuda (CUDA (NVIDIA GeForce RTX 5090))
+2026-01-30 11:24:08,260 - BoT-Training - INFO - Device acceleration: CUDA + AMP
+2026-01-30 11:24:08,426 - BoT-Training - INFO - Dataset loaded: 576 identities
+2026-01-30 11:24:08,427 - BoT-Training - INFO - Train batches: 36
+2026-01-30 11:24:08,427 - BoT-Training - INFO - Query batches: 27
+2026-01-30 11:24:08,427 - BoT-Training - INFO - Gallery batches: 181
+2026-01-30 11:24:09,182 - BoT-Training - INFO - Starting training...
+2026-01-30 11:24:16,519 - BoT-Training - INFO - Epoch 1 Training - Loss: 9.6744, ID_Acc: 0.35%
+2026-01-30 11:24:22,456 - BoT-Training - INFO - Epoch 2 Training - Loss: 8.6633, ID_Acc: 3.69%
+2026-01-30 11:24:28,266 - BoT-Training - INFO - Epoch 3 Training - Loss: 8.1148, ID_Acc: 7.07%
+2026-01-30 11:24:34,389 - BoT-Training - INFO - Epoch 4 Training - Loss: 7.4440, ID_Acc: 9.11%
+2026-01-30 11:24:40,148 - BoT-Training - INFO - Epoch 5 Training - Loss: 6.6178, ID_Acc: 9.64%
+2026-01-30 11:24:46,026 - BoT-Training - INFO - Epoch 6 Training - Loss: 5.9611, ID_Acc: 11.85%
+2026-01-30 11:24:51,858 - BoT-Training - INFO - Epoch 7 Training - Loss: 5.4373, ID_Acc: 15.06%
+2026-01-30 11:24:57,716 - BoT-Training - INFO - Epoch 8 Training - Loss: 5.0276, ID_Acc: 19.27%
+2026-01-30 11:25:03,557 - BoT-Training - INFO - Epoch 9 Training - Loss: 4.6051, ID_Acc: 25.48%
+2026-01-30 11:25:09,588 - BoT-Training - INFO - Epoch 10 Training - Loss: 4.1242, ID_Acc: 32.34%
+2026-01-30 11:25:09,589 - BoT-Training - INFO - Evaluating at epoch 10...
+2026-01-30 11:25:44,723 - BoT-Training - INFO - Epoch 10 Evaluation - mAP: 0.3510, Rank-1: 0.6520, Rank-5: 0.7849, Rank-10: 0.8498
+2026-01-30 11:25:45,147 - BoT-Training - INFO - New best model saved! mAP: 0.3510
+2026-01-30 11:25:51,267 - BoT-Training - INFO - Epoch 11 Training - Loss: 3.9891, ID_Acc: 35.85%
+2026-01-30 11:25:57,397 - BoT-Training - INFO - Epoch 12 Training - Loss: 3.5846, ID_Acc: 42.32%
+2026-01-30 11:26:03,261 - BoT-Training - INFO - Epoch 13 Training - Loss: 3.2771, ID_Acc: 49.26%
+2026-01-30 11:26:09,242 - BoT-Training - INFO - Epoch 14 Training - Loss: 2.8972, ID_Acc: 59.85%
+2026-01-30 11:26:15,564 - BoT-Training - INFO - Epoch 15 Training - Loss: 2.8493, ID_Acc: 59.20%
+2026-01-30 11:26:21,785 - BoT-Training - INFO - Epoch 16 Training - Loss: 2.6956, ID_Acc: 63.06%
+2026-01-30 11:26:27,980 - BoT-Training - INFO - Epoch 17 Training - Loss: 2.5629, ID_Acc: 66.58%
+2026-01-30 11:26:33,892 - BoT-Training - INFO - Epoch 18 Training - Loss: 2.3825, ID_Acc: 71.83%
+2026-01-30 11:26:39,788 - BoT-Training - INFO - Epoch 19 Training - Loss: 2.3027, ID_Acc: 71.79%
+2026-01-30 11:26:45,743 - BoT-Training - INFO - Epoch 20 Training - Loss: 2.1658, ID_Acc: 76.78%
+2026-01-30 11:26:45,743 - BoT-Training - INFO - Evaluating at epoch 20...
+2026-01-30 11:27:19,185 - BoT-Training - INFO - Epoch 20 Evaluation - mAP: 0.4834, Rank-1: 0.7729, Rank-5: 0.8719, Rank-10: 0.9142
+2026-01-30 11:27:19,764 - BoT-Training - INFO - New best model saved! mAP: 0.4834
+2026-01-30 11:27:25,666 - BoT-Training - INFO - Epoch 21 Training - Loss: 2.1627, ID_Acc: 76.39%
+2026-01-30 11:27:31,581 - BoT-Training - INFO - Epoch 22 Training - Loss: 2.0813, ID_Acc: 79.21%
+2026-01-30 11:27:37,496 - BoT-Training - INFO - Epoch 23 Training - Loss: 1.9368, ID_Acc: 83.51%
+2026-01-30 11:27:43,401 - BoT-Training - INFO - Epoch 24 Training - Loss: 2.0027, ID_Acc: 80.51%
+2026-01-30 11:27:49,294 - BoT-Training - INFO - Epoch 25 Training - Loss: 1.9313, ID_Acc: 83.29%
+2026-01-30 11:27:55,142 - BoT-Training - INFO - Epoch 26 Training - Loss: 1.9292, ID_Acc: 84.16%
+2026-01-30 11:28:01,148 - BoT-Training - INFO - Epoch 27 Training - Loss: 1.8336, ID_Acc: 85.81%
+2026-01-30 11:28:07,074 - BoT-Training - INFO - Epoch 28 Training - Loss: 1.8355, ID_Acc: 84.90%
+2026-01-30 11:28:13,103 - BoT-Training - INFO - Epoch 29 Training - Loss: 1.7695, ID_Acc: 86.11%
+2026-01-30 11:28:19,201 - BoT-Training - INFO - Epoch 30 Training - Loss: 1.7649, ID_Acc: 88.06%
+2026-01-30 11:28:19,202 - BoT-Training - INFO - Evaluating at epoch 30...
+2026-01-30 11:28:53,109 - BoT-Training - INFO - Epoch 30 Evaluation - mAP: 0.5176, Rank-1: 0.7980, Rank-5: 0.8927, Rank-10: 0.9321
+2026-01-30 11:28:53,717 - BoT-Training - INFO - New best model saved! mAP: 0.5176
+2026-01-30 11:28:59,756 - BoT-Training - INFO - Epoch 31 Training - Loss: 1.7404, ID_Acc: 87.80%
+2026-01-30 11:29:05,731 - BoT-Training - INFO - Epoch 32 Training - Loss: 1.7389, ID_Acc: 88.24%
+2026-01-30 11:29:11,604 - BoT-Training - INFO - Epoch 33 Training - Loss: 1.7040, ID_Acc: 88.54%
+2026-01-30 11:29:17,314 - BoT-Training - INFO - Epoch 34 Training - Loss: 1.6762, ID_Acc: 89.80%
+2026-01-30 11:29:23,551 - BoT-Training - INFO - Epoch 35 Training - Loss: 1.6567, ID_Acc: 90.41%
+2026-01-30 11:29:29,656 - BoT-Training - INFO - Epoch 36 Training - Loss: 1.6186, ID_Acc: 91.10%
+2026-01-30 11:29:35,647 - BoT-Training - INFO - Epoch 37 Training - Loss: 1.6179, ID_Acc: 90.89%
+2026-01-30 11:29:41,423 - BoT-Training - INFO - Epoch 38 Training - Loss: 1.6024, ID_Acc: 90.97%
+2026-01-30 11:29:47,318 - BoT-Training - INFO - Epoch 39 Training - Loss: 1.6355, ID_Acc: 91.54%
+2026-01-30 11:29:53,172 - BoT-Training - INFO - Epoch 40 Training - Loss: 1.5862, ID_Acc: 91.28%
+2026-01-30 11:29:53,173 - BoT-Training - INFO - Evaluating at epoch 40...
+2026-01-30 11:30:27,138 - BoT-Training - INFO - Epoch 40 Evaluation - mAP: 0.5343, Rank-1: 0.8141, Rank-5: 0.8993, Rank-10: 0.9386
+2026-01-30 11:30:27,749 - BoT-Training - INFO - New best model saved! mAP: 0.5343
+2026-01-30 11:30:34,027 - BoT-Training - INFO - Epoch 41 Training - Loss: 1.5796, ID_Acc: 91.88%
+2026-01-30 11:30:39,833 - BoT-Training - INFO - Epoch 42 Training - Loss: 1.5429, ID_Acc: 92.53%
+2026-01-30 11:30:45,725 - BoT-Training - INFO - Epoch 43 Training - Loss: 1.5376, ID_Acc: 93.36%
+2026-01-30 11:30:51,607 - BoT-Training - INFO - Epoch 44 Training - Loss: 1.4903, ID_Acc: 94.66%
+2026-01-30 11:30:57,640 - BoT-Training - INFO - Epoch 45 Training - Loss: 1.5183, ID_Acc: 93.14%
+2026-01-30 11:31:03,139 - BoT-Training - INFO - Epoch 46 Training - Loss: 1.5492, ID_Acc: 92.58%
+2026-01-30 11:31:09,154 - BoT-Training - INFO - Epoch 47 Training - Loss: 1.5011, ID_Acc: 93.27%
+2026-01-30 11:31:15,122 - BoT-Training - INFO - Epoch 48 Training - Loss: 1.4588, ID_Acc: 94.10%
+2026-01-30 11:31:21,144 - BoT-Training - INFO - Epoch 49 Training - Loss: 1.4450, ID_Acc: 94.70%
+2026-01-30 11:31:27,167 - BoT-Training - INFO - Epoch 50 Training - Loss: 1.4287, ID_Acc: 95.75%
+2026-01-30 11:31:27,168 - BoT-Training - INFO - Evaluating at epoch 50...
+2026-01-30 11:32:01,003 - BoT-Training - INFO - Epoch 50 Evaluation - mAP: 0.5561, Rank-1: 0.8391, Rank-5: 0.9166, Rank-10: 0.9553
+2026-01-30 11:32:01,569 - BoT-Training - INFO - New best model saved! mAP: 0.5561
+2026-01-30 11:32:07,474 - BoT-Training - INFO - Epoch 51 Training - Loss: 1.4646, ID_Acc: 94.27%
+2026-01-30 11:32:13,327 - BoT-Training - INFO - Epoch 52 Training - Loss: 1.4169, ID_Acc: 95.14%
+2026-01-30 11:32:19,362 - BoT-Training - INFO - Epoch 53 Training - Loss: 1.4173, ID_Acc: 95.83%
+2026-01-30 11:32:25,104 - BoT-Training - INFO - Epoch 54 Training - Loss: 1.3933, ID_Acc: 95.83%
+2026-01-30 11:32:31,139 - BoT-Training - INFO - Epoch 55 Training - Loss: 1.4058, ID_Acc: 95.10%
+2026-01-30 11:32:37,040 - BoT-Training - INFO - Epoch 56 Training - Loss: 1.3856, ID_Acc: 95.44%
+2026-01-30 11:32:43,025 - BoT-Training - INFO - Epoch 57 Training - Loss: 1.3926, ID_Acc: 95.53%
+2026-01-30 11:32:49,261 - BoT-Training - INFO - Epoch 58 Training - Loss: 1.3959, ID_Acc: 95.53%
+2026-01-30 11:32:54,897 - BoT-Training - INFO - Epoch 59 Training - Loss: 1.3496, ID_Acc: 97.27%
+2026-01-30 11:33:00,948 - BoT-Training - INFO - Epoch 60 Training - Loss: 1.3437, ID_Acc: 96.79%
+2026-01-30 11:33:00,948 - BoT-Training - INFO - Evaluating at epoch 60...
+2026-01-30 11:33:34,942 - BoT-Training - INFO - Epoch 60 Evaluation - mAP: 0.5772, Rank-1: 0.8456, Rank-5: 0.9273, Rank-10: 0.9625
+2026-01-30 11:33:35,537 - BoT-Training - INFO - New best model saved! mAP: 0.5772
+2026-01-30 11:33:41,733 - BoT-Training - INFO - Epoch 61 Training - Loss: 1.3666, ID_Acc: 95.14%
+2026-01-30 11:33:47,612 - BoT-Training - INFO - Epoch 62 Training - Loss: 1.3368, ID_Acc: 96.74%
+2026-01-30 11:33:53,535 - BoT-Training - INFO - Epoch 63 Training - Loss: 1.3653, ID_Acc: 95.79%
+2026-01-30 11:33:59,467 - BoT-Training - INFO - Epoch 64 Training - Loss: 1.3109, ID_Acc: 97.48%
+2026-01-30 11:34:05,417 - BoT-Training - INFO - Epoch 65 Training - Loss: 1.3227, ID_Acc: 97.44%
+2026-01-30 11:34:11,391 - BoT-Training - INFO - Epoch 66 Training - Loss: 1.3173, ID_Acc: 97.31%
+2026-01-30 11:34:17,433 - BoT-Training - INFO - Epoch 67 Training - Loss: 1.3006, ID_Acc: 97.83%
+2026-01-30 11:34:23,636 - BoT-Training - INFO - Epoch 68 Training - Loss: 1.2828, ID_Acc: 97.61%
+2026-01-30 11:34:29,508 - BoT-Training - INFO - Epoch 69 Training - Loss: 1.2845, ID_Acc: 97.74%
+2026-01-30 11:34:35,504 - BoT-Training - INFO - Epoch 70 Training - Loss: 1.2751, ID_Acc: 97.44%
+2026-01-30 11:34:35,504 - BoT-Training - INFO - Evaluating at epoch 70...
+2026-01-30 11:35:09,062 - BoT-Training - INFO - Epoch 70 Evaluation - mAP: 0.6046, Rank-1: 0.8677, Rank-5: 0.9416, Rank-10: 0.9672
+2026-01-30 11:35:09,703 - BoT-Training - INFO - New best model saved! mAP: 0.6046
+2026-01-30 11:35:15,887 - BoT-Training - INFO - Epoch 71 Training - Loss: 1.2742, ID_Acc: 97.57%
+2026-01-30 11:35:22,011 - BoT-Training - INFO - Epoch 72 Training - Loss: 1.2698, ID_Acc: 97.66%
+2026-01-30 11:35:27,985 - BoT-Training - INFO - Epoch 73 Training - Loss: 1.2661, ID_Acc: 98.22%
+2026-01-30 11:35:34,036 - BoT-Training - INFO - Epoch 74 Training - Loss: 1.2562, ID_Acc: 97.74%
+2026-01-30 11:35:40,160 - BoT-Training - INFO - Epoch 75 Training - Loss: 1.2472, ID_Acc: 98.31%
+2026-01-30 11:35:46,429 - BoT-Training - INFO - Epoch 76 Training - Loss: 1.2453, ID_Acc: 98.39%
+2026-01-30 11:35:52,441 - BoT-Training - INFO - Epoch 77 Training - Loss: 1.2330, ID_Acc: 98.39%
+2026-01-30 11:35:58,478 - BoT-Training - INFO - Epoch 78 Training - Loss: 1.2261, ID_Acc: 98.35%
+2026-01-30 11:36:04,533 - BoT-Training - INFO - Epoch 79 Training - Loss: 1.2117, ID_Acc: 98.65%
+2026-01-30 11:36:10,877 - BoT-Training - INFO - Epoch 80 Training - Loss: 1.2083, ID_Acc: 98.83%
+2026-01-30 11:36:10,877 - BoT-Training - INFO - Evaluating at epoch 80...
+2026-01-30 11:36:44,621 - BoT-Training - INFO - Epoch 80 Evaluation - mAP: 0.6241, Rank-1: 0.8695, Rank-5: 0.9398, Rank-10: 0.9726
+2026-01-30 11:36:45,203 - BoT-Training - INFO - New best model saved! mAP: 0.6241
+2026-01-30 11:36:51,449 - BoT-Training - INFO - Epoch 81 Training - Loss: 1.2125, ID_Acc: 98.83%
+2026-01-30 11:36:57,377 - BoT-Training - INFO - Epoch 82 Training - Loss: 1.2382, ID_Acc: 98.26%
+2026-01-30 11:37:03,276 - BoT-Training - INFO - Epoch 83 Training - Loss: 1.2120, ID_Acc: 98.70%
+2026-01-30 11:37:09,154 - BoT-Training - INFO - Epoch 84 Training - Loss: 1.2140, ID_Acc: 98.44%
+2026-01-30 11:37:15,136 - BoT-Training - INFO - Epoch 85 Training - Loss: 1.2002, ID_Acc: 98.87%
+2026-01-30 11:37:21,120 - BoT-Training - INFO - Epoch 86 Training - Loss: 1.2064, ID_Acc: 98.87%
+2026-01-30 11:37:26,978 - BoT-Training - INFO - Epoch 87 Training - Loss: 1.1778, ID_Acc: 98.83%
+2026-01-30 11:37:33,003 - BoT-Training - INFO - Epoch 88 Training - Loss: 1.1903, ID_Acc: 98.65%
+2026-01-30 11:37:39,122 - BoT-Training - INFO - Epoch 89 Training - Loss: 1.1797, ID_Acc: 99.13%
+2026-01-30 11:37:45,015 - BoT-Training - INFO - Epoch 90 Training - Loss: 1.1733, ID_Acc: 99.00%
+2026-01-30 11:37:45,015 - BoT-Training - INFO - Evaluating at epoch 90...
+2026-01-30 11:38:19,772 - BoT-Training - INFO - Epoch 90 Evaluation - mAP: 0.6390, Rank-1: 0.8826, Rank-5: 0.9505, Rank-10: 0.9744
+2026-01-30 11:38:20,327 - BoT-Training - INFO - New best model saved! mAP: 0.6390
+2026-01-30 11:38:26,278 - BoT-Training - INFO - Epoch 91 Training - Loss: 1.1764, ID_Acc: 99.31%
+2026-01-30 11:38:32,282 - BoT-Training - INFO - Epoch 92 Training - Loss: 1.1674, ID_Acc: 99.26%
+2026-01-30 11:38:38,290 - BoT-Training - INFO - Epoch 93 Training - Loss: 1.1960, ID_Acc: 98.87%
+2026-01-30 11:38:44,226 - BoT-Training - INFO - Epoch 94 Training - Loss: 1.1721, ID_Acc: 99.13%
+2026-01-30 11:38:50,222 - BoT-Training - INFO - Epoch 95 Training - Loss: 1.1615, ID_Acc: 99.65%
+2026-01-30 11:38:56,259 - BoT-Training - INFO - Epoch 96 Training - Loss: 1.1687, ID_Acc: 99.35%
+2026-01-30 11:39:02,217 - BoT-Training - INFO - Epoch 97 Training - Loss: 1.1703, ID_Acc: 99.00%
+2026-01-30 11:39:08,035 - BoT-Training - INFO - Epoch 98 Training - Loss: 1.1721, ID_Acc: 99.13%
+2026-01-30 11:39:14,002 - BoT-Training - INFO - Epoch 99 Training - Loss: 1.1561, ID_Acc: 99.31%
+2026-01-30 11:39:19,897 - BoT-Training - INFO - Epoch 100 Training - Loss: 1.1675, ID_Acc: 99.31%
+2026-01-30 11:39:19,898 - BoT-Training - INFO - Evaluating at epoch 100...
+2026-01-30 11:39:53,389 - BoT-Training - INFO - Epoch 100 Evaluation - mAP: 0.6464, Rank-1: 0.8868, Rank-5: 0.9511, Rank-10: 0.9756
+2026-01-30 11:39:54,011 - BoT-Training - INFO - New best model saved! mAP: 0.6464
+2026-01-30 11:40:01,579 - BoT-Training - INFO - Epoch 101 Training - Loss: 1.1510, ID_Acc: 99.31%
+2026-01-30 11:40:05,805 - BoT-Training - INFO - Epoch 102 Training - Loss: 1.1572, ID_Acc: 99.26%
+2026-01-30 11:40:10,235 - BoT-Training - INFO - Epoch 103 Training - Loss: 1.1465, ID_Acc: 99.52%
+2026-01-30 11:40:16,205 - BoT-Training - INFO - Epoch 104 Training - Loss: 1.1386, ID_Acc: 99.52%
+2026-01-30 11:40:22,044 - BoT-Training - INFO - Epoch 105 Training - Loss: 1.1533, ID_Acc: 99.22%
+2026-01-30 11:40:27,891 - BoT-Training - INFO - Epoch 106 Training - Loss: 1.1391, ID_Acc: 99.57%
+2026-01-30 11:40:33,852 - BoT-Training - INFO - Epoch 107 Training - Loss: 1.1522, ID_Acc: 99.31%
+2026-01-30 11:40:39,752 - BoT-Training - INFO - Epoch 108 Training - Loss: 1.1488, ID_Acc: 99.26%
+2026-01-30 11:40:45,950 - BoT-Training - INFO - Epoch 109 Training - Loss: 1.1463, ID_Acc: 99.22%
+2026-01-30 11:40:51,882 - BoT-Training - INFO - Epoch 110 Training - Loss: 1.1401, ID_Acc: 99.70%
+2026-01-30 11:40:51,883 - BoT-Training - INFO - Evaluating at epoch 110...
+2026-01-30 11:41:25,844 - BoT-Training - INFO - Epoch 110 Evaluation - mAP: 0.6506, Rank-1: 0.8880, Rank-5: 0.9553, Rank-10: 0.9750
+2026-01-30 11:41:26,409 - BoT-Training - INFO - New best model saved! mAP: 0.6506
+2026-01-30 11:41:32,293 - BoT-Training - INFO - Epoch 111 Training - Loss: 1.1479, ID_Acc: 99.31%
+2026-01-30 11:41:38,146 - BoT-Training - INFO - Epoch 112 Training - Loss: 1.1439, ID_Acc: 99.18%
+2026-01-30 11:41:44,079 - BoT-Training - INFO - Epoch 113 Training - Loss: 1.1524, ID_Acc: 99.48%
+2026-01-30 11:41:50,193 - BoT-Training - INFO - Epoch 114 Training - Loss: 1.1480, ID_Acc: 99.26%
+2026-01-30 11:41:55,968 - BoT-Training - INFO - Epoch 115 Training - Loss: 1.1363, ID_Acc: 99.13%
+2026-01-30 11:42:02,032 - BoT-Training - INFO - Epoch 116 Training - Loss: 1.1300, ID_Acc: 99.61%
+2026-01-30 11:42:07,973 - BoT-Training - INFO - Epoch 117 Training - Loss: 1.1395, ID_Acc: 99.22%
+2026-01-30 11:42:14,134 - BoT-Training - INFO - Epoch 118 Training - Loss: 1.1406, ID_Acc: 99.35%
+2026-01-30 11:42:20,258 - BoT-Training - INFO - Epoch 119 Training - Loss: 1.1282, ID_Acc: 99.74%
+2026-01-30 11:42:26,375 - BoT-Training - INFO - Epoch 120 Training - Loss: 1.1352, ID_Acc: 99.48%
+2026-01-30 11:42:26,375 - BoT-Training - INFO - Evaluating at epoch 120...
+2026-01-30 11:43:00,275 - BoT-Training - INFO - Epoch 120 Evaluation - mAP: 0.6515, Rank-1: 0.8868, Rank-5: 0.9547, Rank-10: 0.9762
+2026-01-30 11:43:00,865 - BoT-Training - INFO - New best model saved! mAP: 0.6515
+2026-01-30 11:43:01,127 - BoT-Training - INFO - Training completed! Running final evaluation...
+2026-01-30 11:43:36,036 - BoT-Training - INFO - ================================================================================
+2026-01-30 11:43:36,036 - BoT-Training - INFO - 🎯 FINAL EVALUATION RESULTS
+2026-01-30 11:43:36,036 - BoT-Training - INFO - ================================================================================
+2026-01-30 11:43:36,037 - BoT-Training - INFO - 📊 Performance Metrics:
+2026-01-30 11:43:36,037 - BoT-Training - INFO -    • mAP (Mean Average Precision): 0.6515
+2026-01-30 11:43:36,037 - BoT-Training - INFO -    • CMC Curve Results:
+2026-01-30 11:43:36,037 - BoT-Training - INFO -      - Rank-1 : 0.8868 (88.68%)
+2026-01-30 11:43:36,037 - BoT-Training - INFO -      - Rank-5 : 0.9547 (95.47%)
+2026-01-30 11:43:36,037 - BoT-Training - INFO -      - Rank-10: 0.9762 (97.62%)
+2026-01-30 11:43:36,037 - BoT-Training - INFO -    • Best Training mAP: 0.6515
+2026-01-30 11:43:36,037 - BoT-Training - INFO - ================================================================================
+2026-01-30 11:43:36,037 - BoT-Training - INFO - ✅ Training completed successfully after 120 epochs!
+2026-01-30 11:43:36,037 - BoT-Training - INFO - 📁 Results saved in: ./outputs/grid_scale/8x4/776/baseline_run_01
+2026-01-30 11:43:36,037 - BoT-Training - INFO - 📝 Log file: ./outputs/grid_scale/8x4/776/baseline_run_01/training.log
+2026-01-30 11:43:36,037 - BoT-Training - INFO - 🕐 Session completed: 2026-01-30 11:43:36
+2026-01-30 11:43:36,037 - BoT-Training - INFO - ================================================================================

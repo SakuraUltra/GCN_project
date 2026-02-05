@@ -1,0 +1,52 @@
+# BoT-Baseline "黄金标准" Configuration for VeRi-776
+# Stage 1: Foundation for GCN-Transformer + LoRA project
+
+# Data Configuration
+DATA:
+  ROOT: "data/776_DataSet"
+  BATCH_SIZE: 64  # P * K = 16 * 4 = 64 (PK Sampler)
+  NUM_WORKERS: 4
+  
+  # PK Sampler for Triplet Loss (关键!)
+  USE_PK_SAMPLER: true
+  P: 16  # Number of identities per batch
+  K: 4   # Number of instances per identity
+
+# Model Configuration
+MODEL:
+  NAME: "BoTBaseline"
+  BACKBONE: "resnet50_ibn_a"
+  PRETRAINED: true
+  NUM_CLASSES: 576  # VeRi-776 training identities
+  FEATURE_DIM: 2048
+
+# Optimizer Configuration (SOTA)
+OPTIMIZER:
+  NAME: "AdamW"  # SOTA标准
+  BASE_LR: 0.00035  # 强制解析为浮点数
+  WEIGHT_DECAY: 0.0005
+  EPS: !!float 1e-8         # 强制解析为浮点数
+
+# Scheduler Configuration (SOTA)
+SCHEDULER:
+  NAME: "WarmupCosineAnnealingLR"  # Warmup + 余弦退火
+  WARMUP_EPOCHS: 10
+  
+# Loss Configuration
+LOSS:
+  LABEL_SMOOTH: 0.1      # CrossEntropyLabelSmooth epsilon
+  TRIPLET_MARGIN: 0.3    # Triplet Loss margin
+  ID_LOSS_WEIGHT: 1.0    # 1:1 weighting
+  TRIPLET_LOSS_WEIGHT: 1.0
+
+# Training Configuration
+EPOCHS: 120
+EVAL_PERIOD: 10  # Evaluate every 10 epochs
+LOG_PERIOD: 50   # Log every 50 batches
+
+# AMP (Automatic Mixed Precision)
+USE_AMP: true
+
+# Expected Performance (VeRi-776 benchmarks)
+# Target mAP: ~72-75%
+# Target CMC@1: ~89-92%

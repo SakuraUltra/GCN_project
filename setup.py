@@ -1,0 +1,37 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="gcn-transformer-lora-reid",
+    version="1.0.0",
+    description="GCN-Transformer + LoRA for Continual Vehicle Re-Identification",
+    author="Your Name",
+    author_email="your.email@example.com",
+    packages=find_packages(),
+    python_requires=">=3.8",
+    install_requires=[
+        "torch>=1.12.0",
+        "torchvision>=0.13.0", 
+        "numpy>=1.21.0",
+        "scipy>=1.7.0",
+        "scikit-learn>=1.0.0",
+        "Pillow>=8.3.0",
+        "matplotlib>=3.4.0",
+        "pandas>=1.3.0",
+        "tqdm>=4.62.0",
+        "PyYAML>=5.4.0",
+        "torch-geometric>=2.0.0",
+        "peft>=0.4.0",
+        "transformers>=4.20.0",
+    ],
+    classifiers=[
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Researchers",
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Topic :: Computer Vision :: Vehicle Re-Identification",
+    ],
+    keywords="vehicle re-identification, continual learning, graph neural networks, transformer, LoRA",
+)
