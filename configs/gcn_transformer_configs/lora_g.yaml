@@ -1,0 +1,61 @@
+# GCN-Transformer + LoRA-G Configuration
+model:
+  name: "gcn_transformer_lora_g"
+  backbone: "resnet50_ibn_a"
+  pretrained: true
+  num_classes: 576  # VeRi-776 training identities
+  feature_dim: 2048
+  
+  # GCN Configuration
+  gcn:
+    num_nodes: 49  # 7x7 feature map
+    gcn_layers: 2
+    hidden_dim: 512
+    dropout: 0.1
+    
+  # Transformer Configuration  
+  transformer:
+    num_layers: 6
+    num_heads: 8
+    hidden_dim: 512
+    ffn_dim: 2048
+    dropout: 0.1
+    
+  # LoRA Configuration
+  lora:
+    apply_to: ["gcn"]  # Only apply LoRA to GCN layers
+    rank: 16
+    alpha: 16
+    dropout: 0.1
+    freeze_backbone: true
+
+data:
+  dataset: "veri776"
+  batch_size: 32  # Smaller batch size due to transformer
+  num_workers: 4
+  pin_memory: true
+  transforms:
+    - "random_horizontal_flip"
+    - "random_erasing" 
+    - "color_jitter"
+
+training:
+  epochs: 80  # Fewer epochs for continual learning
+  lr: 0.0001  # Lower learning rate for LoRA
+  weight_decay: 0.0001
+  scheduler: "cosine"
+  
+loss:
+  triplet_margin: 0.3
+  label_smooth: 0.1
+
+evaluation:
+  eval_step: 5
+  test_batch_size: 64
+  max_rank: 50
+  
+# Continual Learning Settings
+continual_learning:
+  enabled: true
+  memory_buffer_size: 2000
+  rehearsal_ratio: 0.1

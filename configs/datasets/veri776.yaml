@@ -1,0 +1,57 @@
+# VeRi-776 Dataset Configuration
+dataset:
+  name: "veri776"
+  root: "/users/sl3753/scratch/GCN_project/data/776_DataSet"
+  
+  # Data paths
+  image_train: "image_train"
+  image_query: "image_query" 
+  image_test: "image_test"
+  
+  # Label files
+  train_label: "train_label.xml"
+  test_label: "test_label.xml"
+  name_train: "name_train.txt"
+  name_query: "name_query.txt"
+  name_test: "name_test.txt"
+  
+  # Ground truth files
+  gt_index: "gt_index.txt"
+  jk_index: "jk_index.txt"
+  
+  # Camera information
+  camera_id: "camera_ID.txt"
+  camera_dist: "camera_Dist.txt"
+  
+  # Statistics
+  num_train_ids: 576
+  num_test_ids: 200
+  num_cameras: 20
+  
+  # Image preprocessing
+  image_size: [256, 256]
+  pixel_mean: [0.485, 0.456, 0.406]
+  pixel_std: [0.229, 0.224, 0.225]
+  
+  # Data augmentation
+  transforms:
+    train:
+      - "resize": [256, 256]
+      - "random_horizontal_flip": 0.5
+      - "random_erasing": 
+          probability: 0.5
+          mean: [0.485, 0.456, 0.406]
+      - "color_jitter":
+          brightness: 0.1
+          contrast: 0.1
+          saturation: 0.1
+          hue: 0.1
+      - "normalize": 
+          mean: [0.485, 0.456, 0.406]
+          std: [0.229, 0.224, 0.225]
+    
+    test:
+      - "resize": [256, 256]
+      - "normalize":
+          mean: [0.485, 0.456, 0.406]
+          std: [0.229, 0.224, 0.225]

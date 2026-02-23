@@ -1,0 +1,61 @@
+._*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+venv_*/
+.env
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Datasets (too large to push)
+data/dataset/
+data/*/
+
+# Training outputs (exclude checkpoints and outputs)
+outputs/*/best_model.pth
+outputs/*/checkpoint_*.pth
+outputs/*/*.png
+outputs/*/training.log
+
+# SLURM logs (too many)
+logs/*.out
+logs/*.err
+
+# Graph structures (can be regenerated)
+outputs/graph_structures/
+
+# Model weights
+*.pth
+*.pt
+*.ckpt
+*.onnx
+
+# Allow specific important files
+!README.md
+!FINAL_RESULTS.md
+!*.yaml
+!*.py
+!requirements.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

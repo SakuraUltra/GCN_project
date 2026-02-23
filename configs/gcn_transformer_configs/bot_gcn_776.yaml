@@ -1,0 +1,83 @@
+# BoT-GCN Configuration for VeRi-776
+# CNN + GCN + Graph Pooling + Embedding Fusion
+# Step 4: 训练 CNN+GCN 模型
+
+# Data Configuration
+DATA:
+  ROOT: "data/dataset/776_DataSet"
+  BATCH_SIZE: 64  # P * K = 16 * 4 = 64
+  NUM_WORKERS: 24
+  
+  # PK Sampler for Triplet Loss
+  USE_PK_SAMPLER: true
+  P: 16  # Number of identities per batch
+  K: 4   # Number of instances per identity
+
+# Model Configuration
+MODEL:
+  NAME: "BoTGCN"
+  BACKBONE: "resnet50_ibn_a"
+  PRETRAINED: true
+  PRETRAINED_PATH: "outputs/bot_baseline_1_1/776/baseline_run_01/best_model.pth"  # VeRi-776 baseline预训练
+  NUM_CLASSES: 576  # VeRi-776 training identities
+  FEATURE_DIM: 2048
+  LAST_STRIDE: 1
+  
+  # GCN Configuration
+  USE_GCN: true
+  GRID_H: 4
+  GRID_W: 4
+  GCN_HIDDEN_DIM: 512
+  GCN_NUM_LAYERS: 1
+  GCN_DROPOUT: 0.5
+  
+  # Graph Pooling Configuration
+  POOLING_TYPE: "mean"  # 'mean', 'max', 'attention'
+  POOLING_HIDDEN_DIM: 128  # for attention pooling
+  
+  # Embedding Fusion Configuration
+  FUSION_TYPE: "concat"  # 'concat', 'gated', 'add', 'none'
+  FUSION_HIDDEN_DIM: 512  # for gated fusion
+  FUSION_DROPOUT: 0.5
+  
+  # BNNeck
+  NECK: "bnneck"
+
+# Optimizer Configuration
+OPTIMIZER:
+  NAME: "AdamW"
+  BASE_LR: 0.00035
+  WEIGHT_DECAY: 0.0005
+  EPS: !!float 1e-8
+
+# Scheduler Configuration
+SCHEDULER:
+  NAME: "WarmupCosineAnnealingLR"
+  WARMUP_EPOCHS: 10
+  
+# Loss Configuration
+LOSS:
+  LABEL_SMOOTH: 0.1
+  TRIPLET_MARGIN: 0.3
+  ID_LOSS_WEIGHT: 1.0
+  TRIPLET_LOSS_WEIGHT: 1.0
+
+# Training Configuration
+EPOCHS: 120
+EVAL_PERIOD: 10
+LOG_PERIOD: 50
+
+# AMP (Automatic Mixed Precision)
+# Note: Disabled because sparse matrix ops in GCN don't support FP16
+USE_AMP: false
+
+# Output Configuration
+OUTPUT_DIR: "outputs/bot_gcn_776"
+SEED: 42
+
+# 备注:
+# 1. 首先用 mean pooling + concat fusion 训练 baseline
+# 2. 然后进行消融实验:
+#    - Pooling: mean vs max vs attention
+#    - Fusion: concat vs gated
+#    - Grid Size: 4x4 vs 8x8

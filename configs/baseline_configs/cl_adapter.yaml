@@ -1,0 +1,40 @@
+# CL-Adapter Configuration for Continual Learning Comparison
+model:
+  name: "cl_adapter"
+  backbone: "resnet50_ibn_a"
+  pretrained: true
+  num_classes: 576
+  feature_dim: 2048
+  
+  # Adapter settings
+  adapter:
+    hidden_dim: 256
+    adapter_layers: ["layer3", "layer4"]
+    freeze_backbone: true
+    
+data:
+  dataset: "veri776"
+  batch_size: 64
+  num_workers: 4
+  pin_memory: true
+
+training:
+  epochs: 80
+  lr: 0.0001
+  weight_decay: 0.0001
+  scheduler: "cosine"
+  
+loss:
+  triplet_margin: 0.3
+  label_smooth: 0.1
+
+evaluation:
+  eval_step: 5
+  test_batch_size: 64
+  max_rank: 50
+  
+# Continual Learning Settings
+continual_learning:
+  enabled: true
+  memory_buffer_size: 1000
+  rehearsal_ratio: 0.1
