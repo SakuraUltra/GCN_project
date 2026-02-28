@@ -179,8 +179,24 @@ class VehicleIDDataset(Dataset):
             return img, pid, camid
 
 
-def build_transforms(height=256, width=256, random_erase=True):
-    """Build data transforms"""
+def build_transforms(height=256, width=256, random_erase=True, aug_config=None):
+    """
+    Build data transforms with configurable augmentation strategies
+    
+    Args:
+        height (int): 图像高度
+        width (int): 图像宽度
+        random_erase (bool): 是否使用随机擦除（向后兼容）
+        aug_config (dict): 数据增强配置
+            {
+                'type': 'random_erasing' | 'cutout' | 'gridmask' | 'part_dropout' | 'mixed' | 'none',
+                'probability': 0.5,
+                'params': {...}  # 特定增强方法的参数
+            }
+    
+    Returns:
+        train_transform, test_transform
+    """
     normalize = T.Normalize(mean=[0.485, 0.456, 0.406], 
                            std=[0.229, 0.224, 0.225])
     
@@ -193,9 +209,20 @@ def build_transforms(height=256, width=256, random_erase=True):
         normalize,
     ]
     
-    if random_erase:
-        from torchvision.transforms import RandomErasing
-        train_transforms.append(RandomErasing(p=0.5, value='random'))
+    # 数据增强配置
+    if aug_config is not None:
+        from utils.augmentations import build_augmentation_config
+        aug_type = aug_config.get('type', 'random_erasing')
+        aug_prob = aug_config.get('probability', 0.5)
+        aug_params = aug_config.get('params', {})
+        
+        aug = build_augmentation_config(aug_type, probability=aug_prob, **aug_params)
+        if aug is not None:
+            train_transforms.append(aug)
+    elif random_erase:
+        # 向后兼容：使用原来的RandomErasing
+        from utils.augmentations import RandomErasing
+        train_transforms.append(RandomErasing(probability=0.5, mode='random'))
     
     test_transforms = [
         T.Resize((height, width)),
@@ -254,16 +281,33 @@ def split_vehicleid_test(root, test_list_name='test_list_800.txt'):
     return query_data, gallery_data
 
 
-def create_data_loaders(data_root, batch_size=64, num_workers=4, use_pk_sampler=True, p=16, k=4):
+def create_data_loaders(data_root, batch_size=64, num_workers=4, use_pk_sampler=True, p=16, k=4, aug_config=None):
     """
-    Create data loaders. 
-    detects dataset type ('Structure A': VeRi vs 'Structure B': VehicleID) based on path.
+    Create data loaders with configurable augmentation.
+    Detects dataset type ('Structure A': VeRi vs 'Structure B': VehicleID) based on path.
+    
+    Args:
+        data_root (str): 数据集根目录
+        batch_size (int): batch大小
+        num_workers (int): 数据加载线程数
+        use_pk_sampler (bool): 是否使用PK采样器
+        p (int): PK采样器的P（身份数）
+        k (int): PK采样器的K（每个身份的样本数）
+        aug_config (dict): 数据增强配置
+            {
+                'type': 'random_erasing' | 'cutout' | 'gridmask' | 'part_dropout' | 'mixed',
+                'probability': 0.5,
+                'params': {...}
+            }
+    
+    Returns:
+        train_loader, query_loader, gallery_loader, num_classes
     """
     
     # Detect Dataset Type
     is_vehicleID = 'VehicleID' in data_root
     
-    train_transform, test_transform = build_transforms()
+    train_transform, test_transform = build_transforms(aug_config=aug_config)
     
     if is_vehicleID:
         print(f"Detected VehicleID dataset at {data_root}")

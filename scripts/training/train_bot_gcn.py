@@ -107,14 +107,33 @@ def build_dataloaders(config):
     test_size = config['DATA'].get('TEST_SIZE', 'small') if is_vehicleid else None
     
     # 数据增强和预处理
-    train_transform = T.Compose([
+    train_transforms = [
         T.Resize((256, 256)),
         T.RandomHorizontalFlip(p=0.5),
         T.Pad(10),
         T.RandomCrop((256, 256)),
         T.ToTensor(),
         T.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-    ])
+    ]
+    
+    # 添加数据增强 (如 Random Erasing)
+    if 'AUGMENTATION' in config['DATA']:
+        from utils.augmentations import build_augmentation_config
+        aug_config = config['DATA']['AUGMENTATION']
+        aug_type = aug_config.get('TYPE', 'random_erasing')
+        aug_prob = aug_config.get('PROBABILITY', 0.5)
+        aug_params = aug_config.get('PARAMS', {})
+        
+        aug = build_augmentation_config(aug_type, probability=aug_prob, **aug_params)
+        if aug is not None:
+            train_transforms.append(aug)
+            print(f"✓ Added data augmentation: {aug_type} (probability={aug_prob}, params={aug_params})")
+        else:
+            print(f"⚠️ Failed to build augmentation: {aug_type}")
+    else:
+        print("⚠️ No AUGMENTATION config found, using basic transforms only")
+    
+    train_transform = T.Compose(train_transforms)
     
     test_transform = T.Compose([
         T.Resize((256, 256)),
@@ -374,6 +393,20 @@ def main():
     logger.info(f"   • Output Directory: {output_dir}")
     logger.info(f"   • Log File: {output_dir / 'training.log'}")
     logger.info(f"   • Session Time: {session_time}")
+    
+    # Data Augmentation Configuration
+    if 'AUGMENTATION' in config.get('DATA', {}):
+        aug_config = config['DATA']['AUGMENTATION']
+        aug_type = aug_config.get('TYPE', 'none')
+        aug_prob = aug_config.get('PROBABILITY', 0.0)
+        logger.info(f"   • Data Augmentation: {aug_type.upper()} (probability={aug_prob})")
+        if aug_type == 'random_erasing' and 'PARAMS' in aug_config:
+            params = aug_config['PARAMS']
+            logger.info(f"     - Erasing Area: {params.get('sl', 0.02)*100:.1f}% ~ {params.get('sh', 0.4)*100:.1f}%")
+            logger.info(f"     - Aspect Ratio: {params.get('r1', 0.3):.2f} ~ {params.get('r2', 3.33):.2f}")
+            logger.info(f"     - Fill Mode: {params.get('mode', 'random')}")
+    else:
+        logger.info(f"   • Data Augmentation: NONE (baseline)")
     
     # 设备信息
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

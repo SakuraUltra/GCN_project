@@ -1,0 +1,102 @@
+# Data Augmentation Configurations for Vehicle Re-ID
+# 用于消融研究的不同遮挡增强策略配置
+
+# ============================================
+# 1. Random Erasing (默认策略)
+# ============================================
+RANDOM_ERASING:
+  TYPE: "random_erasing"
+  PROBABILITY: 0.5
+  PARAMS:
+    sl: 0.02          # 最小擦除面积比例
+    sh: 0.4           # 最大擦除面积比例
+    r1: 0.3           # 最小宽高比
+    r2: 3.33          # 最大宽高比 (1/0.3)
+    mode: "random"    # 填充模式: 'random', 'pixel', 'black'
+
+# ============================================
+# 2. Cutout
+# ============================================
+CUTOUT:
+  TYPE: "cutout"
+  PROBABILITY: 0.5
+  PARAMS:
+    n_holes: 1        # 切除方块数量
+    length: 64        # 方块边长（像素）
+    fill_value: "mean" # 填充值: 'mean', 'random', 'black', 或具体数值
+
+# ============================================
+# 3. GridMask
+# ============================================
+GRIDMASK:
+  TYPE: "gridmask"
+  PROBABILITY: 0.5
+  PARAMS:
+    d_range: [40, 100]  # 网格间距范围
+    ratio: 0.6          # 遮挡比例
+    mode: "black"       # 遮挡模式: 'random', 'black'
+    rotate: true        # 是否随机旋转
+
+# ============================================
+# 4. Part Dropout
+# ============================================
+PART_DROPOUT:
+  TYPE: "part_dropout"
+  PROBABILITY: 0.3
+  PARAMS:
+    parts: 4          # 划分部分数
+    drop_parts: 1     # 丢弃部分数
+    mode: "black"     # 填充模式
+
+# ============================================
+# 5. Mixed Strategy (随机选择)
+# ============================================
+MIXED:
+  TYPE: "mixed"
+  PROBABILITY: 0.7
+  PARAMS:
+    re_args:
+      sl: 0.02
+      sh: 0.4
+      mode: "random"
+    cutout_args:
+      n_holes: 1
+      length: 64
+    gridmask_args:
+      d_range: [40, 100]
+      ratio: 0.6
+    part_args:
+      parts: 4
+      drop_parts: 1
+
+# ============================================
+# 6. No Augmentation (用于对比实验)
+# ============================================
+NONE:
+  TYPE: "none"
+  PROBABILITY: 0.0
+  PARAMS: {}
+
+# ============================================
+# 7. Aggressive Random Erasing (更强的遮挡)
+# ============================================
+AGGRESSIVE_RE:
+  TYPE: "random_erasing"
+  PROBABILITY: 0.7    # 更高的应用概率
+  PARAMS:
+    sl: 0.02
+    sh: 0.5           # 更大的擦除面积
+    r1: 0.3
+    r2: 3.33
+    mode: "random"
+
+# ============================================
+# 8. Conservative Cutout (保守的Cutout)
+# ============================================
+CONSERVATIVE_CUTOUT:
+  TYPE: "cutout"
+  PROBABILITY: 0.3
+  PARAMS:
+    n_holes: 1
+    length: 32        # 较小的切除区域
+    fill_value: "black"
