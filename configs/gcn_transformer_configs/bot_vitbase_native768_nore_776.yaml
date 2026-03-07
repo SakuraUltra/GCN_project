@@ -1,0 +1,115 @@
+# ============================================================
+# ViT-GCN Native Dimension 配置文件 (VIT-34 无 Random Erasing)
+# 对应模块化 ViTBackbone，native_dim=True，768-dim 无投影
+# 参数量: 89.20M（节省 21.92M vs 投影版）
+# ⚠️ Random Erasing 关闭用于消融实验
+# 对比 VIT-25（有RE，77.27%）量化 RE 对 ViT+GCN 的贡献
+# ============================================================
+
+# Data Configuration
+DATA:
+  ROOT: "data/dataset/776_DataSet"
+  BATCH_SIZE: 64  # P * K = 16 * 4 = 64
+  NUM_WORKERS: 24
+  
+  # PK Sampler for Triplet Loss
+  USE_PK_SAMPLER: true
+  P: 16  # Number of identities per batch
+  K: 4   # Number of instances per identity
+
+# Model Configuration
+MODEL:
+  NAME: "BotGCN"
+
+  # ── Backbone (VIT-25 Native Mode) ─────────────────────────
+  BACKBONE:
+    TYPE: "vit"
+    NAME: "vit_base_patch16_224.augreg_in21k_ft_in1k"  # ViT-Base/21k
+    PRETRAINED: true
+    NATIVE_DIM: true                            # ✨ VIT-25 新增：使用原生维度
+    # OUT_CHANNELS: 移除（native 模式下由 backbone 自动决定 768）
+    # TARGET_SPATIAL: 移除（native 模式下保持 14×14）
+
+  # ── GCN (自动适配 768-dim) ────────────────────────────────
+  GCN:
+    USE_GCN: true
+    GRID_H: 4
+    GRID_W: 4
+    IN_CHANNELS: 768                            # 自动对齐 ViT-Base 原生维度
+    HIDDEN_CHANNELS: 512
+    OUT_CHANNELS: 768                           # 输出维度对齐 feat_dim
+    NUM_LAYERS: 1
+    DROPOUT: 0.5
+    POOLING_TYPE: "mean"                        # mean / max / attention
+
+  # ── 融合层 ─────────────────────────────────────────────────
+  FUSION:
+    TYPE: "concat"                              # embedding_fusion
+    CLS_FUSION: true                            # CLS token 融合层
+    OUT_DIM: 768                                # 融合后输出维度对齐 feat_dim
+
+  # ── 分类头 ─────────────────────────────────────────────────
+  NUM_CLASSES: 576                              # VeRi-776 training identities
+
+  # BNNeck
+  NECK: "bnneck"
+
+# Input Configuration
+INPUT:
+  # ViT 标准输入尺寸
+  SIZE_TRAIN: [224, 224]
+  SIZE_TEST: [224, 224]
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+
+# Dataloader Configuration
+DATALOADER:
+  SAMPLER: "pk"
+  NUM_INSTANCE: 4                              # K
+  BATCH_SIZE: 64                               # P×K = 16×4
+
+# Optimizer Configuration
+OPTIMIZER:
+  NAME: "AdamW"
+  # ViT 微调小学习率
+  BASE_LR: 0.000035                            # 3.5e-5
+  WEIGHT_DECAY: 0.0005
+  EPS: !!float 1e-8
+
+  # 分组学习率（native 模式无投影层，移除 patch_proj/cls_proj）
+  LR_GROUPS:
+    vit_backbone: 1.0                          # backbone lr = BASE_LR × 1.0
+    cls_fusion: 10.0                           # CLS 融合层
+    gcn: 10.0                                  # GCN 层
+
+# Scheduler Configuration
+SCHEDULER:
+  NAME: "WarmupCosineAnnealingLR"
+  WARMUP_ITERS: 500
+  WARMUP_EPOCHS: 10
+  
+# Loss Configuration
+LOSS:
+  LABEL_SMOOTH: 0.1
+  TRIPLET_MARGIN: 0.3
+  ID_LOSS_WEIGHT: 1.0
+  TRIPLET_LOSS_WEIGHT: 1.0
+
+# Augmentation Configuration (VIT-34: Random Erasing DISABLED)
+AUGMENTATION:
+  RANDOM_ERASING: false
+  RANDOM_ERASING_PROB: 0.0  # ⚠️ 关闭 RE 用于消融实验
+
+# Training Configuration
+TRAIN:
+  EPOCHS: 120
+  CHECKPOINT_PERIOD: 20
+  EVAL_PERIOD: 20
+  LOG_PERIOD: 50
+
+# Output Configuration
+OUTPUT:
+  DIR: "outputs/bot_vitbase_native768_nore_776"
+
+# Reproducibility
+SEED: 42

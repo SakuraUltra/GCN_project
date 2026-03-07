@@ -187,7 +187,12 @@ class ReIDEvaluator:
             
             cmc_tmp = orig_cmc.cumsum()
             cmc_tmp[cmc_tmp > 1] = 1
-            all_cmc.append(cmc_tmp[:max_rank])
+            
+            # 确保所有CMC数组长度一致
+            cmc_padded = np.zeros(max_rank)
+            valid_len = min(len(cmc_tmp), max_rank)
+            cmc_padded[:valid_len] = cmc_tmp[:valid_len]
+            all_cmc.append(cmc_padded)
             
             num_valid_q += 1.0
             
@@ -262,8 +267,11 @@ class ReIDEvaluator:
         self.logger.info('Evaluation Results:')
         self.logger.info(f'mAP: {mAP:.4f}')
         self.logger.info('CMC Curve:')
+        # 只打印 gallery 大小允许的 rank
+        max_available_rank = len(cmc)
         for r in [1, 5, 10, 20]:
-            self.logger.info(f'  Rank-{r:2d}: {cmc[r-1]:.4f}')
+            if r <= max_available_rank:
+                self.logger.info(f'  Rank-{r:2d}: {cmc[r-1]:.4f}')
         self.logger.info('=' * 50)
         
         return results

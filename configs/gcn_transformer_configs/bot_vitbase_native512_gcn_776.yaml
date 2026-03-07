@@ -1,0 +1,107 @@
+# ============================================================
+# ViT-GCN Native 512-dim 降维配置 (VIT-25 优化版)
+# 768 → GCN(512) → Fusion(512) → Classifier(512)
+# 目标：减少参数量同时保持性能
+# ============================================================
+
+# Data Configuration
+DATA:
+  ROOT: "data/dataset/776_DataSet"
+  BATCH_SIZE: 64  # P * K = 16 * 4 = 64
+  NUM_WORKERS: 24
+  
+  # PK Sampler for Triplet Loss
+  USE_PK_SAMPLER: true
+  P: 16  # Number of identities per batch
+  K: 4   # Number of instances per identity
+
+# Model Configuration
+MODEL:
+  NAME: "BotGCN"
+
+  # ── Backbone (VIT-25 Native Mode) ─────────────────────────
+  BACKBONE:
+    TYPE: "vit"
+    NAME: "vit_base_patch16_224.augreg_in21k_ft_in1k"  # ViT-Base/21k
+    PRETRAINED: true
+    NATIVE_DIM: true                            # ✨ VIT-25: 使用原生768维度
+
+  # ── GCN (降维到 512) ───────────────────────────────────────
+  GCN:
+    USE_GCN: true
+    GRID_H: 4
+    GRID_W: 4
+    IN_CHANNELS: 768                            # ViT-Base 原生维度
+    HIDDEN_CHANNELS: 256                        # 中间层降维
+    OUT_CHANNELS: 512                           # ✨ 输出降维到 512
+    NUM_LAYERS: 1
+    DROPOUT: 0.5
+    POOLING_TYPE: "mean"
+
+  # ── 融合层 (512-dim) ────────────────────────────────────────
+  FUSION:
+    TYPE: "concat"                              # embedding_fusion
+    CLS_FUSION: true                            # CLS token 融合层
+    OUT_DIM: 512                                # ✨ 融合后维度 512
+
+  # ── 分类头 ─────────────────────────────────────────────────
+  NUM_CLASSES: 576                              # VeRi-776 training identities
+  NECK: "bnneck"
+
+# Input Configuration
+INPUT:
+  SIZE_TRAIN: [224, 224]
+  SIZE_TEST: [224, 224]
+  PIXEL_MEAN: [0.485, 0.456, 0.406]
+  PIXEL_STD: [0.229, 0.224, 0.225]
+
+# Dataloader Configuration
+DATALOADER:
+  SAMPLER: "pk"
+  NUM_INSTANCE: 4
+  BATCH_SIZE: 64
+
+# Optimizer Configuration
+OPTIMIZER:
+  NAME: "AdamW"
+  BASE_LR: 0.000035                            # 3.5e-5
+  WEIGHT_DECAY: 0.0005
+  EPS: !!float 1e-8
+
+  # 分组学习率
+  LR_GROUPS:
+    vit_backbone: 1.0                          # backbone lr = BASE_LR × 1.0
+    cls_fusion: 10.0                           # CLS 融合层
+    gcn: 10.0                                  # GCN 层
+
+# Scheduler Configuration
+SCHEDULER:
+  NAME: "WarmupCosineAnnealingLR"
+  WARMUP_ITERS: 500
+  WARMUP_EPOCHS: 10
+  
+# Loss Configuration
+LOSS:
+  LABEL_SMOOTH: 0.1
+  TRIPLET_MARGIN: 0.3
+  ID_LOSS_WEIGHT: 1.0
+  TRIPLET_LOSS_WEIGHT: 1.0
+
+# Augmentation Configuration
+AUGMENTATION:
+  RANDOM_ERASING: true
+  RANDOM_ERASING_PROB: 0.5
+
+# Training Configuration
+TRAIN:
+  EPOCHS: 120
+  CHECKPOINT_PERIOD: 20
+  EVAL_PERIOD: 20
+  LOG_PERIOD: 50
+
+# Output Configuration
+OUTPUT:
+  DIR: "outputs/bot_vitbase_native512_gcn_776"
+
+# Reproducibility
+SEED: 42

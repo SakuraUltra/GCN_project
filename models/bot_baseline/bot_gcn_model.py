@@ -25,7 +25,9 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from models.backbones.resnet_ibn import resnet50_ibn_a
-from models.gcn import SimpleGCN, GraphPooling
+from models.transformer.vit_backbone import ViTBackbone
+from models.gcn import SimpleGCN, GraphPooling, KNNEdgeBuilder, HybridEdgeBuilder
+from models.gcn.gat_conv import SimpleGAT
 from models.fusion.embedding_fusion import EmbeddingFusion
 
 
@@ -85,16 +87,32 @@ class BoTGCN(nn.Module):
     def __init__(
         self,
         num_classes,
-        # CNN配置
+        # Backbone配置
+        backbone_type='vit',       # ← 新增：'resnet' or 'vit'
         last_stride=1,
         pretrain_path='',
+        # ViT配置 (当 backbone_type='vit' 时生效)
+        vit_model_name="deit_small_patch16_224.fb_in1k",
+        vit_pretrained=True,
+        vit_native_dim=True,       # ← VIT-25: 原生维度开关
+        vit_proj_channels=2048,    # ← native_dim=False 时生效
+        vit_target_spatial=8,      # ← native_dim=False 时生效
         # GCN配置
         use_gcn=True,
         grid_h=4,
         grid_w=4,
+        adjacency_type='4',  # '4', '8', 'knn', or 'hybrid'
         gcn_hidden_dim=512,
+        gcn_out_dim=None,        # ← VIT-25: GCN输出维度（None=与feat_dim一致）
         gcn_num_layers=1,
         gcn_dropout=0.5,
+        # GAT 配置 (VIT-26)
+        gnn_type='gcn',       # 'gcn' or 'gat'
+        gat_heads=4,          # GAT 多头注意力数量
+        # kNN 配置 (当 adjacency_type='knn' 或 'hybrid' 时生效)
+        knn_k=4,
+        knn_metric='cosine',  # 'cosine' or 'euclidean'
+        knn_detach=True,      # 是否停止 kNN 的特征梯度
         # 图池化配置
         pooling_type='mean',  # 'mean', 'max', 'attention'
         pooling_hidden_dim=128,
@@ -108,14 +126,24 @@ class BoTGCN(nn.Module):
         """
         Args:
             num_classes: 类别数
-            last_stride: 最后一个卷积层的stride
+            backbone_type: Backbone类型 ('resnet' or 'vit')
+            last_stride: 最后一个卷积层的stride (ResNet)
             pretrain_path: 预训练权重路径
+            
+            vit_native_dim: ViT 原生维度模式 (True=768/384, False=2048)
+            vit_proj_channels: 投影维度 (仅 native_dim=False 时生效)
+            vit_target_spatial: 目标空间尺寸 (仅 native_dim=False 时生效)
             
             use_gcn: 是否使用GCN分支
             grid_h, grid_w: 网格大小
+            adjacency_type: 邻接类型 ('4'=4-neighbor, '8'=8-neighbor, 'knn'=动态kNN, 'hybrid'=固定+kNN)
             gcn_hidden_dim: GCN隐藏层维度
             gcn_num_layers: GCN层数
             gcn_dropout: GCN dropout
+            
+            knn_k: kNN 邻居数量
+            knn_metric: kNN 相似度度量 ('cosine' or 'euclidean')
+            knn_detach: 是否停止 kNN 特征梯度
             
             pooling_type: 图池化类型
             pooling_hidden_dim: Attention pooling隐藏层维度
@@ -132,21 +160,37 @@ class BoTGCN(nn.Module):
         self.use_gcn = use_gcn
         self.neck = neck
         self.fusion_type = fusion_type
+        self.adjacency_type = adjacency_type
+        self.knn_k = knn_k
+        self.knn_metric = knn_metric
+        self.gnn_type = gnn_type  # 'gcn' or 'gat'
+        self.backbone_type = backbone_type
+        self.is_vit = (backbone_type == 'vit')  # 标记是否为 ViT
         
-        # ========== 1. CNN Backbone ==========
-        self.backbone = resnet50_ibn_a(pretrained=False)
+        # ========== 1. Backbone ==========
+        if backbone_type == 'resnet':
+            # ResNet Backbone (不支持 last_stride 参数)
+            self.backbone = resnet50_ibn_a()
+            feat_dim = 2048  # ResNet50 输出维度
+            # 注意: 预训练权重在训练脚本中统一加载
+        elif backbone_type == 'vit':
+            # ViT Backbone - 模块化版本
+            self.backbone = ViTBackbone(
+                model_name=vit_model_name,
+                pretrained=vit_pretrained,
+                native_dim=vit_native_dim,
+                proj_channels=vit_proj_channels,
+                target_spatial=vit_target_spatial,
+            )
+            feat_dim = self.backbone.out_dim  # 768 (native) or 2048 (projected)
+        else:
+            raise ValueError(f"Unknown backbone_type: {backbone_type}. Must be 'resnet' or 'vit'")
         
-        # 修改last_stride (如果需要)
-        if last_stride == 1:
-            self.backbone.layer4[0].conv2.stride = (1, 1)
-            self.backbone.layer4[0].downsample[0].stride = (1, 1)
+        # GCN 输出维度（可与 feat_dim 不同）
+        graph_dim = gcn_out_dim if gcn_out_dim is not None else feat_dim
+        self.graph_dim = graph_dim  # 保存为实例变量供forward使用
         
-        # 如果有预训练权重，加载
-        if pretrain_path:
-            self.load_pretrained_weights(pretrain_path)
-        
-        # ========== 2. 全局分支 (GAP) ==========
-        self.gap = nn.AdaptiveAvgPool2d(1)
+        # ========== 2. 全局分支 (CLS token 直接替代 GAP) ==========
         
         # ========== 3. 图分支 (如果启用) ==========
         if self.use_gcn:
@@ -154,54 +198,104 @@ class BoTGCN(nn.Module):
             self.grid_pooling = GridPooling(grid_h, grid_w)
             self.num_nodes = grid_h * grid_w
             
-            # 3.2 GCN层
-            self.gcn = SimpleGCN(
-                in_channels=2048,
-                hidden_channels=gcn_hidden_dim,
-                out_channels=2048,
-                num_layers=gcn_num_layers,
-                dropout=gcn_dropout
-            )
+            # 3.2 GCN/GAT层（维度跟随 feat_dim）
+            if gnn_type.lower() == 'gat':
+                self.gcn = SimpleGAT(
+                    in_channels=feat_dim,
+                    hidden_channels=gcn_hidden_dim,
+                    out_channels=graph_dim,
+                    num_layers=gcn_num_layers,
+                    heads=gat_heads,
+                    dropout=gcn_dropout
+                )
+                self.gnn_type = 'gat'
+            else:
+                self.gcn = SimpleGCN(
+                    in_channels=feat_dim,
+                    hidden_channels=gcn_hidden_dim,
+                    out_channels=graph_dim,
+                    num_layers=gcn_num_layers,
+                    dropout=gcn_dropout
+                )
+                self.gnn_type = 'gcn'
             
             # 3.3 图池化
             if pooling_type == 'attention':
                 self.graph_pooling = GraphPooling(
                     pooling_type=pooling_type,
-                    in_channels=2048,
+                    in_channels=graph_dim,
                     hidden_channels=pooling_hidden_dim
                 )
             else:
                 self.graph_pooling = GraphPooling(pooling_type=pooling_type)
             
-            # 3.4 预计算邻接矩阵 (4-neighbor grid)
-            self.register_buffer('edge_index', self._build_grid_adjacency(grid_h, grid_w))
+            # 3.4 边构建器
+            if adjacency_type in ['4', '8']:
+                # 固定网格邻接（预计算）
+                self.register_buffer('edge_index', self._build_grid_adjacency(grid_h, grid_w, adjacency_type))
+                self.dynamic_edges = False
+                self.edge_builder = None
+            elif adjacency_type == 'knn':
+                # 动态 kNN 边
+                self.edge_index = None
+                self.dynamic_edges = True
+                self.edge_builder = KNNEdgeBuilder(k=knn_k, metric=knn_metric, detach_features=knn_detach)
+            elif adjacency_type == 'hybrid':
+                # 混合边: 固定网格 + 动态 kNN
+                self.edge_index = None
+                self.dynamic_edges = True
+                self.edge_builder = HybridEdgeBuilder(
+                    grid_h=grid_h, grid_w=grid_w, 
+                    adjacency_type='4',  # 默认使用 4-neighbor 网格
+                    knn_k=knn_k, knn_metric=knn_metric
+                )
+            else:
+                raise ValueError(f"Invalid adjacency_type: {adjacency_type}. Must be '4', '8', 'knn', or 'hybrid'.")
             
-            # 3.5 嵌入融合
+            # 3.5 嵌入融合（维度跟随 feat_dim）
             self.embedding_fusion = EmbeddingFusion(
                 fusion_type=fusion_type,
-                global_dim=2048,
-                graph_dim=2048,
-                output_dim=2048,
+                global_dim=feat_dim,
+                graph_dim=graph_dim,
+                output_dim=graph_dim,
                 hidden_dim=fusion_hidden_dim,
                 dropout=fusion_dropout
             )
         
-        # ========== 4. BNNeck (Batch Normalization Neck) ==========
+        # ========== 4. CLS Fusion Layer (仅 ViT+GCN 时使用) ==========
+        # 注意: ResNet 的 cls_emb 等于 global_emb，无需二次融合
+        if self.use_gcn and self.is_vit:
+            # cls_emb(feat_dim) + graph_emb(graph_dim) -> graph_dim
+            self.cls_fusion = nn.Sequential(
+                nn.Linear(feat_dim + graph_dim, graph_dim, bias=False),
+                nn.BatchNorm1d(graph_dim),
+                nn.ReLU(inplace=True),
+            )
+            final_dim = graph_dim
+        else:
+            final_dim = graph_dim if self.use_gcn else feat_dim
+        
+        # ========== 5. BNNeck (Batch Normalization Neck，维度跟随 feat_dim) ==========
         if self.neck == 'bnneck':
-            self.bottleneck = nn.BatchNorm1d(2048)
+            self.bottleneck = nn.BatchNorm1d(final_dim)
             self.bottleneck.bias.requires_grad_(False)  # 不学习bias
             nn.init.constant_(self.bottleneck.weight, 1)
             nn.init.constant_(self.bottleneck.bias, 0)
         else:
             self.bottleneck = None
         
-        # ========== 5. Classifier ==========
-        self.classifier = nn.Linear(2048, num_classes, bias=False)
+        # ========== 6. Classifier (维度跟随 feat_dim) ==========
+        self.classifier = nn.Linear(final_dim, num_classes, bias=False)
         nn.init.normal_(self.classifier.weight, std=0.001)
     
-    def _build_grid_adjacency(self, grid_h, grid_w):
+    def _build_grid_adjacency(self, grid_h, grid_w, adjacency_type='4'):
         """
-        构建网格图的邻接矩阵 (4-neighbor)
+        构建网格图的邻接矩阵
+        
+        Args:
+            grid_h: 网格高度
+            grid_w: 网格宽度
+            adjacency_type: '4' for 4-neighbor, '8' for 8-neighbor
         
         Returns:
             edge_index: (2, E) 边索引
@@ -209,29 +303,58 @@ class BoTGCN(nn.Module):
         num_nodes = grid_h * grid_w
         edges = []
         
-        for i in range(grid_h):
-            for j in range(grid_w):
-                node_id = i * grid_w + j
-                
-                # 上
-                if i > 0:
-                    neighbor = (i - 1) * grid_w + j
-                    edges.append([node_id, neighbor])
-                
-                # 下
-                if i < grid_h - 1:
-                    neighbor = (i + 1) * grid_w + j
-                    edges.append([node_id, neighbor])
-                
-                # 左
-                if j > 0:
-                    neighbor = i * grid_w + (j - 1)
-                    edges.append([node_id, neighbor])
-                
-                # 右
-                if j < grid_w - 1:
-                    neighbor = i * grid_w + (j + 1)
-                    edges.append([node_id, neighbor])
+        if adjacency_type == '4':
+            # 4-邻居: 上、下、左、右
+            for i in range(grid_h):
+                for j in range(grid_w):
+                    node_id = i * grid_w + j
+                    
+                    # 上
+                    if i > 0:
+                        neighbor = (i - 1) * grid_w + j
+                        edges.append([node_id, neighbor])
+                    
+                    # 下
+                    if i < grid_h - 1:
+                        neighbor = (i + 1) * grid_w + j
+                        edges.append([node_id, neighbor])
+                    
+                    # 左
+                    if j > 0:
+                        neighbor = i * grid_w + (j - 1)
+                        edges.append([node_id, neighbor])
+                    
+                    # 右
+                    if j < grid_w - 1:
+                        neighbor = i * grid_w + (j + 1)
+                        edges.append([node_id, neighbor])
+        
+        elif adjacency_type == '8':
+            # 8-邻居: 4-邻居 + 4个对角线
+            directions = [
+                (-1, 0),   # 上
+                (1, 0),    # 下
+                (0, -1),   # 左
+                (0, 1),    # 右
+                (-1, -1),  # 左上
+                (-1, 1),   # 右上
+                (1, -1),   # 左下
+                (1, 1),    # 右下
+            ]
+            
+            for i in range(grid_h):
+                for j in range(grid_w):
+                    node_id = i * grid_w + j
+                    
+                    for di, dj in directions:
+                        ni, nj = i + di, j + dj
+                        # 检查边界
+                        if 0 <= ni < grid_h and 0 <= nj < grid_w:
+                            neighbor_id = ni * grid_w + nj
+                            edges.append([node_id, neighbor_id])
+        
+        else:
+            raise ValueError(f"Invalid adjacency_type: {adjacency_type}. Must be '4' or '8'.")
         
         edge_index = torch.tensor(edges, dtype=torch.long).t().contiguous()
         return edge_index
@@ -291,11 +414,16 @@ class BoTGCN(nn.Module):
         """
         extra = {}
         
-        # 1. CNN特征提取
-        feat_map = self.backbone(x)  # (B, 2048, 8, 8)
+        # 1. Backbone 特征提取
+        if self.backbone_type == 'resnet':
+            feat_map = self.backbone(x)  # (B, 2048, 8, 8)
+            # ResNet 没有 CLS token，使用 GAP 作为全局特征
+            cls_emb = F.adaptive_avg_pool2d(feat_map, (1, 1)).view(feat_map.size(0), -1)  # (B, 2048)
+        elif self.backbone_type == 'vit':
+            feat_map, cls_emb = self.backbone(x)  # feat_map: (B, 2048, 8, 8), cls_emb: (B, 2048)
         
-        # 2. 全局分支
-        global_emb = self.gap(feat_map).view(feat_map.size(0), -1)  # (B, 2048)
+        # 2. 全局分支 (CLS token 或 GAP)
+        global_emb = cls_emb  # (B, 2048)
         
         # 3. 图分支 (如果启用)
         if self.use_gcn:
@@ -303,31 +431,47 @@ class BoTGCN(nn.Module):
             nodes = self.grid_pooling(feat_map)  # (B, N, 2048)
             B, N, C = nodes.shape
             
-            # 3.2 Reshape for GCN: (B, N, C) -> (B*N, C)
-            nodes_flat = nodes.view(B * N, C)
+            # 3.2 边构建
+            if self.dynamic_edges:
+                # 动态构建边 (kNN 或 hybrid)
+                if isinstance(self.edge_builder, KNNEdgeBuilder):
+                    edge_index_list, edge_weight_list = self.edge_builder(nodes)
+                elif isinstance(self.edge_builder, HybridEdgeBuilder):
+                    edge_index_list = self.edge_builder(nodes)
+                    edge_weight_list = None
+                else:
+                    raise ValueError(f"Unknown edge builder: {type(self.edge_builder)}")
+                
+                # 合并所有样本的边 (加上偏移量)
+                edge_index_batch = []
+                for b, edge_idx in enumerate(edge_index_list):
+                    edge_index_batch.append(edge_idx + b * N)
+                edge_index_batch = torch.cat(edge_index_batch, dim=1)  # (2, total_E)
+            else:
+                # 使用预计算的固定边
+                edge_index = self.edge_index
+                edge_index_batch = []
+                for b in range(B):
+                    edge_index_batch.append(edge_index + b * N)
+                edge_index_batch = torch.cat(edge_index_batch, dim=1)  # (2, B*E)
             
-            # 3.3 Expand edge_index for batch
-            # edge_index: (2, E), need (2, B*E)
-            edge_index = self.edge_index
-            edge_index_batch = []
-            for b in range(B):
-                edge_index_batch.append(edge_index + b * N)
-            edge_index_batch = torch.cat(edge_index_batch, dim=1)  # (2, B*E)
+            # 3.3 Reshape for GCN: (B, N, C) -> (B*N, C)
+            nodes_flat = nodes.view(B * N, C)
             
             # 3.4 GCN处理 (禁用AMP因为稀疏矩阵不支持FP16)
             with torch.amp.autocast('cuda', enabled=False):
                 nodes_flat_fp32 = nodes_flat.float()
-                nodes_gcn = self.gcn(nodes_flat_fp32, edge_index_batch)  # (B*N, C)
+                nodes_gcn = self.gcn(nodes_flat_fp32, edge_index_batch)  # (B*N, graph_dim)
                 if nodes_flat.dtype == torch.float16:
                     nodes_gcn = nodes_gcn.half()
             
-            # 3.5 Reshape back: (B*N, C) -> (B, N, C)
-            nodes_gcn = nodes_gcn.view(B, N, C)
+            # 3.5 Reshape back: (B*N, graph_dim) -> (B, N, graph_dim)
+            nodes_gcn = nodes_gcn.view(B, N, self.graph_dim)
             
-            # 3.6 图池化: (B, N, C) -> (B, C)
+            # 3.6 图池化: (B, N, graph_dim) -> (B, graph_dim)
             # 需要为每个batch创建batch索引
             batch_idx = torch.arange(B, device=nodes.device).repeat_interleave(N)
-            nodes_gcn_flat = nodes_gcn.view(B * N, C)
+            nodes_gcn_flat = nodes_gcn.view(B * N, self.graph_dim)
             
             graph_emb = self.graph_pooling(nodes_gcn_flat, batch_idx)  # (B, C)
             
@@ -335,9 +479,17 @@ class BoTGCN(nn.Module):
             fused_emb, fusion_extra = self.embedding_fusion(global_emb, graph_emb)
             extra.update(fusion_extra)
             
+            # 3.8 CLS 与 fused_emb 的二次融合 (仅 ViT)
+            if self.is_vit:
+                # ViT: CLS token 与融合特征二次融合
+                fused_emb = self.cls_fusion(
+                    torch.cat([cls_emb, fused_emb], dim=1)  # (B, 4096) -> (B, 2048)
+                )
+            # ResNet: cls_emb == global_emb，已在 fusion 中使用，无需二次融合
+            
             final_emb = fused_emb
         else:
-            # 只使用全局嵌入
+            # 只使用全局嵌入 (CLS token)
             final_emb = global_emb
         
         # 4. BNNeck
