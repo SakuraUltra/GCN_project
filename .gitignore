@@ -1,61 +1,84 @@
-._*
-
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-env/
-venv/
-venv_*/
-.env
-
-# Jupyter
-.ipynb_checkpoints
-*.ipynb
-
-# Build
 build/
+develop-eggs/
 dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
 *.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Datasets (too large to push)
-data/dataset/
-data/*/
-
-# Training outputs (exclude checkpoints and outputs)
-outputs/*/best_model.pth
-outputs/*/checkpoint_*.pth
-outputs/*/*.png
-outputs/*/training.log
-
-# SLURM logs (too many)
-logs/*.out
-logs/*.err
-
-# Graph structures (can be regenerated)
-outputs/graph_structures/
-
-# Model weights
-*.pth
-*.pt
-*.ckpt
-*.onnx
-
-# Allow specific important files
-!README.md
-!FINAL_RESULTS.md
-!*.yaml
-!*.py
-!requirements.txt
+# Virtual Environment
+venv/
+venv_t4/
+ENV/
+env/
+.venv
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS
+*~
 .DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# Dataset (exclude all data - too large for git)
+data/
+*.zip
+*.tar
+*.tar.gz
+
+# Training Outputs (exclude checkpoints and large files)
+# Keep experiment results (CSV/JSON files)
+outputs/*
+!outputs/ablation_occlusion_results/
+outputs/ablation_occlusion_results/*
+!outputs/ablation_occlusion_results/*.csv
+!outputs/ablation_occlusion_results/*.json
+!outputs/ablation_occlusion_results/individual_results/
+!outputs/ablation_occlusion_results/individual_results/*.csv
+
+# Logs (exclude all log files, keep directory structure)
+logs/*
+!logs/.gitkeep
+
+# Model Checkpoints (exclude all model files)
+*.pth
+*.pt
+*.ckpt
+*.safetensors
+
+# Temporary Files
+*.log
+*.tmp
+*.cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# System Files
 Thumbs.db
+.directory
+
+# Backup Files
+*_OLD*.md
+*_backup*.md
+cleanup_project.sh

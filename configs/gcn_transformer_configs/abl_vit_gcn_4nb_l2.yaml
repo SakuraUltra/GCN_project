@@ -1,0 +1,92 @@
+# ============================================================
+# abl_vit_gcn_4nb_l2.yaml
+# ABL-11
+# ViT-Base Native768 + GCN, Edge=4-neighbor, Layers=2
+# ============================================================
+
+DATA:
+  ROOT: "data/dataset/776_DataSet"
+  BATCH_SIZE: 64
+  NUM_WORKERS: 8
+  USE_PK_SAMPLER: true
+  P: 16
+  K: 4
+  AUGMENTATION:
+    TYPE: "random_erasing"
+    PROBABILITY: 0.5
+    PARAMS:
+      sl: 0.02
+      sh: 0.2
+      r1: 0.3
+      r2: 3.33
+      mode: "random"
+
+INPUT:
+  SIZE_TRAIN: [224, 224]        # ViT requires 224x224
+  SIZE_TEST: [224, 224]
+
+MODEL:
+  NAME: "BoTGCN"
+  BACKBONE:
+    TYPE: "vit_native"
+    NAME: "vit_base_patch16_224.augreg_in21k_ft_in1k"
+    PRETRAINED: true
+    NATIVE_DIM: true
+  NUM_CLASSES: 576
+  FEATURE_DIM: 768
+  LAST_STRIDE: 1
+
+  GCN:
+    USE_GCN: true
+    GRID_H: 4
+    GRID_W: 4
+    ADJACENCY_TYPE: "4"
+    HIDDEN_CHANNELS: 512
+    OUT_CHANNELS: null
+    NUM_LAYERS: 2               # ← Layers=2
+    DROPOUT: 0.5
+    KNN_K: 8
+    KNN_METRIC: "cosine"
+    KNN_DETACH: true
+    GNN_TYPE: "gcn"
+    POOLING_TYPE: "mean"
+    POOLING_HIDDEN_DIM: 128
+
+  FUSION:
+    TYPE: "concat"
+    HIDDEN_DIM: 512
+    DROPOUT: 0.5
+
+OPTIMIZER:
+  NAME: "AdamW"
+  BASE_LR: 0.000035
+  WEIGHT_DECAY: 0.0001
+  EPS: !!float 1e-8
+  LR_GROUPS:
+    vit_backbone: 1.0
+    cls_norm: 10.0
+    gcn: 10.0
+    cls_fusion: 10.0
+
+SCHEDULER:
+  NAME: "WarmupCosineAnnealingLR"
+  WARMUP_EPOCHS: 10
+
+LOSS:
+  LABEL_SMOOTH: 0.1
+  TRIPLET_MARGIN: 0.3
+  ID_LOSS_WEIGHT: 1.0
+  TRIPLET_LOSS_WEIGHT: 1.0
+
+EPOCHS: 120
+EVAL_PERIOD: 10
+LOG_PERIOD: 50
+
+AUGMENTATION:
+  RANDOM_ERASING: true
+  RANDOM_ERASING_PROB: 0.5
+
+USE_AMP: false
+OUTPUT:
+  DIR: "outputs/ablation/vit_gcn_4nb_l2"
+SEED: 42

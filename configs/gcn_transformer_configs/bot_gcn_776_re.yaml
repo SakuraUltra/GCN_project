@@ -6,7 +6,7 @@
 DATA:
   ROOT: "data/dataset/776_DataSet"
   BATCH_SIZE: 64  # P * K = 16 * 4 = 64
-  NUM_WORKERS: 24
+  NUM_WORKERS: 8  # 减少 worker 数量避免死锁
   
   # PK Sampler for Triplet Loss
   USE_PK_SAMPLER: true
@@ -48,11 +48,6 @@ MODEL:
   
   # Embedding Fusion Configuration
   FUSION_TYPE: "concat"  # 'concat', 'gated', 'add', 'none'
-  FUSION_HIDDEN_DIM: 512  # for gated fusion
-  FUSION_DROPOUT: 0.5
-  
-  # BNNeck
-  NECK: "bnneck"
 
 # Optimizer Configuration
 OPTIMIZER:
@@ -78,12 +73,17 @@ EPOCHS: 120
 EVAL_PERIOD: 10
 LOG_PERIOD: 50
 
+# Augmentation Configuration
+AUGMENTATION:
+  RANDOM_ERASING: true
+  RANDOM_ERASING_PROB: 0.5
+
 # AMP (Automatic Mixed Precision)
 # Note: Disabled because sparse matrix ops in GCN don't support FP16
 USE_AMP: false
 
 # Output Configuration
-OUTPUT_DIR: "outputs/bot_gcn_776_Random"
+OUTPUT_DIR: "outputs/resnet_gcn_re"
 SEED: 42
 
 # Experimental Hypothesis:

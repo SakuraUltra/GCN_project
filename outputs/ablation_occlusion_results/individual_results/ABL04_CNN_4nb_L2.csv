@@ -1,0 +1,12 @@
+abl_id,model_name,model_group,description,occlusion_level,mAP,rank1,rank5,rank10
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,0,74.2022,94.2193,97.1394,98.5697
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,3,73.5706,93.9809,97.0799,98.1526
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,6,73.0502,93.7425,97.199,98.093
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,9,72.4405,92.7294,96.6627,98.0334
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,12,71.5215,92.0739,96.2455,97.795
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,15,71.2244,91.7759,96.6031,97.9142
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,18,69.7467,91.1204,95.4112,97.1394
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,21,68.647,89.273,95.5304,97.3778
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,24,68.0632,88.7366,95.7688,97.0203
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,27,66.2123,86.472,94.1001,96.3647
+ABL-04,CNN+GCN 4nb L2,ResNet50,ResNet50-IBN + 4-neighbor + 2 layer GCN,30,64.6692,85.5781,92.9678,95.8284

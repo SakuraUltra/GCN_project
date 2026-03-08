@@ -27,6 +27,7 @@ MODEL:
   USE_GCN: true
   GRID_H: 4
   GRID_W: 4
+  ADJACENCY_TYPE: "4"  # '4' for 4-neighbor, '8' for 8-neighbor
   GCN_HIDDEN_DIM: 512
   GCN_NUM_LAYERS: 1
   GCN_DROPOUT: 0.5
@@ -42,6 +43,11 @@ MODEL:
   
   # BNNeck
   NECK: "bnneck"
+
+# Augmentation Configuration
+AUGMENTATION:
+  RANDOM_ERASING: true
+  RANDOM_ERASING_PROB: 0.5
 
 # Optimizer Configuration
 OPTIMIZER:

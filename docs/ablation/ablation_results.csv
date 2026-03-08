@@ -1,0 +1,7 @@
+Experiment,Backbone,Edge_Type,GCN_Layers,mAP,Rank-1,Rank-5,Rank-10,Job_ID,Config_File
+ABL-01/03/07,ResNet50-IBN,4-neighbor,1,0.7382,0.9356,0.9702,0.9821,31433178,abl_cnn_gcn_4nb_l1.yaml
+ABL-04,ResNet50-IBN,4-neighbor,2,0.7329,0.9309,0.9708,0.9839,31433179,abl_cnn_gcn_4nb_l2.yaml
+ABL-08,ResNet50-IBN,kNN-8,1,0.7267,0.9291,0.9690,0.9815,31433196,abl_cnn_gcn_knn_l1.yaml
+ABL-02/10/14,ViT-Base-768,4-neighbor,1,0.7252,0.9476,0.9785,0.9875,31433313,abl_vit_gcn_4nb_l1.yaml
+ABL-11,ViT-Base-768,4-neighbor,2,0.7151,0.9374,0.9774,0.9893,31433314,abl_vit_gcn_4nb_l2.yaml
+ABL-15,ViT-Base-768,kNN-8,1,0.7191,0.9410,0.9774,0.9893,31433315,abl_vit_gcn_knn_l1.yaml

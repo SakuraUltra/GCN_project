@@ -45,6 +45,11 @@ MODEL:
   # BNNeck
   NECK: "bnneck"
 
+# Augmentation Configuration
+AUGMENTATION:
+  RANDOM_ERASING: true
+  RANDOM_ERASING_PROB: 0.5
+
 # Optimizer Configuration
 OPTIMIZER:
   NAME: "AdamW"

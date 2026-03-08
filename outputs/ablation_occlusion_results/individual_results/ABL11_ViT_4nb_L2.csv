@@ -1,0 +1,12 @@
+abl_id,model_name,model_group,description,occlusion_level,mAP,rank1,rank5,rank10
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,0,72.7077,94.1001,97.3182,98.5101
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,3,72.2221,93.8617,97.2586,98.5697
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,6,72.0243,93.087,96.7819,98.7485
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,9,71.2583,92.7294,96.9607,98.6889
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,12,70.7115,92.8486,96.6031,98.4505
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,15,69.8124,92.2527,96.4839,98.1526
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,18,69.3019,91.7759,96.4839,98.0334
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,21,68.1207,90.6436,95.888,97.8546
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,24,67.3416,89.8093,96.0072,97.6162
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,27,65.7781,88.4386,95.4708,97.6758
+ABL-11,ViT+GCN 4nb L2,ViT-Base,ViT-Base-768 + 4-neighbor + 2 layer GCN,30,65.0148,87.8427,94.3981,96.4243

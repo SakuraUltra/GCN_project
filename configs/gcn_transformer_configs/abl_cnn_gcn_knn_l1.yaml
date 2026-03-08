@@ -1,0 +1,81 @@
+# ============================================================
+# abl_cnn_gcn_knn_l1.yaml
+# ABL-08
+# ResNet50-IBN + GCN, Edge=kNN(k=8), Layers=1
+# ============================================================
+
+DATA:
+  ROOT: "data/dataset/776_DataSet"
+  BATCH_SIZE: 64
+  NUM_WORKERS: 8
+  USE_PK_SAMPLER: true
+  P: 16
+  K: 4
+  AUGMENTATION:
+    TYPE: "random_erasing"
+    PROBABILITY: 0.5
+    PARAMS:
+      sl: 0.02
+      sh: 0.2
+      r1: 0.3
+      r2: 3.33
+      mode: "random"
+
+MODEL:
+  NAME: "BoTGCN"
+  BACKBONE: "resnet50_ibn_a"
+  PRETRAINED: true
+  PRETRAINED_PATH: "outputs/bot_baseline_1_1/776/baseline_run_01/best_model.pth"
+  NUM_CLASSES: 576
+  FEATURE_DIM: 2048
+  LAST_STRIDE: 1
+
+  GCN:
+    USE_GCN: true
+    GRID_H: 4
+    GRID_W: 4
+    ADJACENCY_TYPE: "knn"       # ← kNN 动态建图
+    HIDDEN_CHANNELS: 512
+    OUT_CHANNELS: null
+    NUM_LAYERS: 1
+    DROPOUT: 0.5
+    KNN_K: 8                    # ← k=8（固定，论文建议值）
+    KNN_METRIC: "cosine"        # 余弦相似度
+    KNN_DETACH: true            # 阻止梯度回传到建图
+    GNN_TYPE: "gcn"
+    POOLING_TYPE: "mean"
+    POOLING_HIDDEN_DIM: 128
+
+  FUSION:
+    TYPE: "concat"
+    HIDDEN_DIM: 512
+    DROPOUT: 0.5
+
+OPTIMIZER:
+  NAME: "AdamW"
+  BASE_LR: 0.00035
+  WEIGHT_DECAY: 0.0005
+  EPS: !!float 1e-8
+
+SCHEDULER:
+  NAME: "WarmupCosineAnnealingLR"
+  WARMUP_EPOCHS: 10
+
+LOSS:
+  LABEL_SMOOTH: 0.1
+  TRIPLET_MARGIN: 0.3
+  ID_LOSS_WEIGHT: 1.0
+  TRIPLET_LOSS_WEIGHT: 1.0
+
+EPOCHS: 120
+EVAL_PERIOD: 10
+LOG_PERIOD: 50
+
+AUGMENTATION:
+  RANDOM_ERASING: true
+  RANDOM_ERASING_PROB: 0.5
+
+USE_AMP: false
+OUTPUT:
+  DIR: "outputs/ablation/cnn_gcn_knn_l1"
+SEED: 42

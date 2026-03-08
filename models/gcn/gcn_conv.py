@@ -143,29 +143,31 @@ class SimpleGCN(nn.Module):
         self.num_layers = num_layers
         self.dropout = dropout
         
+        # 构建多层GCN
+        self.convs = nn.ModuleList()
         if num_layers == 1:
-            self.conv1 = GCNConv(in_channels, out_channels)
-            self.conv2 = None
+            self.convs.append(GCNConv(in_channels, out_channels))
         else:
-            self.conv1 = GCNConv(in_channels, hidden_channels)
-            self.conv2 = GCNConv(hidden_channels, out_channels)
+            # 第一层
+            self.convs.append(GCNConv(in_channels, hidden_channels))
+            # 中间层
+            for _ in range(num_layers - 2):
+                self.convs.append(GCNConv(hidden_channels, hidden_channels))
+            # 最后一层
+            self.convs.append(GCNConv(hidden_channels, out_channels))
     
     def forward(self, x, edge_index, edge_weight=None):
-        x = self.conv1(x, edge_index, edge_weight)
-        
-        if self.num_layers == 1:
-            return x
-        
-        x = F.relu(x)
-        x = F.dropout(x, p=self.dropout, training=self.training)
-        x = self.conv2(x, edge_index, edge_weight)
-        
+        for i, conv in enumerate(self.convs):
+            x = conv(x, edge_index, edge_weight)
+            # 最后一层不加激活和dropout
+            if i < len(self.convs) - 1:
+                x = F.relu(x)
+                x = F.dropout(x, p=self.dropout, training=self.training)
         return x
     
     def reset_parameters(self):
-        self.conv1.reset_parameters()
-        if self.conv2 is not None:
-            self.conv2.reset_parameters()
+        for conv in self.convs:
+            conv.reset_parameters()
 
 
 def test_gcn():

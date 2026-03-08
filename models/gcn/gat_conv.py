@@ -199,24 +199,33 @@ class SimpleGAT(nn.Module):
         super().__init__()
         self.num_layers = num_layers
         self.dropout = dropout
+        self.heads = heads
 
+        # 构建多层GAT
+        self.convs = nn.ModuleList()
         if num_layers == 1:
             # 单层：直接输出 out_channels，多头取均值
-            self.conv1 = GATv2Conv(
+            self.convs.append(GATv2Conv(
                 in_channels, out_channels,
                 heads=heads, concat=False, dropout=dropout
-            )
-            self.conv2 = None
+            ))
         else:
-            # 双层：第一层和第二层都用均值
-            self.conv1 = GATv2Conv(
+            # 第一层
+            self.convs.append(GATv2Conv(
                 in_channels, hidden_channels,
                 heads=heads, concat=False, dropout=dropout
-            )
-            self.conv2 = GATv2Conv(
+            ))
+            # 中间层
+            for _ in range(num_layers - 2):
+                self.convs.append(GATv2Conv(
+                    hidden_channels, hidden_channels,
+                    heads=heads, concat=False, dropout=dropout
+                ))
+            # 最后一层
+            self.convs.append(GATv2Conv(
                 hidden_channels, out_channels,
                 heads=heads, concat=False, dropout=dropout
-            )
+            ))
 
     def forward(
         self,
@@ -228,15 +237,13 @@ class SimpleGAT(nn.Module):
         输入: (N, C_in), (2, E)
         输出: (N, C_out)
         """
-        if self.num_layers == 1:
-            x = self.conv1(x, edge_index)
-        else:
-            x = self.conv1(x, edge_index)
-            x = F.elu(x)
-            x = F.dropout(x, p=self.dropout, training=self.training)
-            x = self.conv2(x, edge_index)
-
+        for i, conv in enumerate(self.convs):
+            x = conv(x, edge_index)
+            # 最后一层不加激活和dropout
+            if i < len(self.convs) - 1:
+                x = F.elu(x)
+                x = F.dropout(x, p=self.dropout, training=self.training)
         return x
 
     def __repr__(self):
-        return f'{self.__class__.__name__}(layers={self.num_layers}, heads={self.conv1.heads})'
+        return f'{self.__class__.__name__}(layers={self.num_layers}, heads={self.heads})'

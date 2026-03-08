@@ -157,7 +157,7 @@ def main():
     
     # 加载checkpoint
     logger.info(f"加载checkpoint: {args.checkpoint}")
-    checkpoint = torch.load(args.checkpoint, map_location=device)
+    checkpoint = torch.load(args.checkpoint, map_location=device, weights_only=False)
     if 'model_state_dict' in checkpoint:
         model.load_state_dict(checkpoint['model_state_dict'])
         logger.info(f"✓ 加载epoch {checkpoint.get('epoch', 'unknown')}, mAP: {checkpoint.get('best_mAP', 'unknown'):.4f}")
