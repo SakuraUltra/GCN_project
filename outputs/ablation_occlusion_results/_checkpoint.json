@@ -1,531 +1,289 @@
 [
   {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
     "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
     "occlusion_level": 0,
-    "mAP": 74.5205,
-    "rank1": 93.62339782714844,
-    "rank5": 97.25859832763672,
-    "rank10": 98.09300231933594
+    "mAP": 74.3696,
+    "rank1": 94.27890014648438,
+    "rank5": 97.61620330810547,
+    "rank10": 98.331298828125
   },
   {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
     "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
     "occlusion_level": 3,
-    "mAP": 73.913,
-    "rank1": 92.84860229492188,
-    "rank5": 97.25859832763672,
-    "rank10": 98.09300231933594
-  },
-  {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 6,
-    "mAP": 73.2395,
-    "rank1": 92.908203125,
-    "rank5": 96.84149932861328,
-    "rank10": 98.09300231933594
-  },
-  {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 9,
-    "mAP": 72.6255,
-    "rank1": 92.13349914550781,
-    "rank5": 96.60310363769531,
-    "rank10": 97.79499816894531
-  },
-  {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 12,
-    "mAP": 71.8603,
-    "rank1": 92.37190246582031,
-    "rank5": 96.48390197753906,
-    "rank10": 97.67579650878906
-  },
-  {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 15,
-    "mAP": 71.3272,
-    "rank1": 90.70320129394531,
-    "rank5": 96.0072021484375,
-    "rank10": 97.49700164794922
-  },
-  {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 18,
-    "mAP": 69.8198,
-    "rank1": 89.63050079345703,
-    "rank5": 95.2323989868164,
-    "rank10": 97.37779998779297
-  },
-  {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 21,
-    "mAP": 68.7068,
-    "rank1": 88.61740112304688,
-    "rank5": 94.93440246582031,
-    "rank10": 96.54350280761719
-  },
-  {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 24,
-    "mAP": 68.0232,
-    "rank1": 89.27300262451172,
-    "rank5": 94.45770263671875,
-    "rank10": 96.78189849853516
-  },
-  {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 27,
-    "mAP": 66.0589,
-    "rank1": 87.00830078125,
-    "rank5": 94.45770263671875,
-    "rank10": 96.12629699707031
-  },
-  {
-    "model_name": "CNN+GCN 4nb L1",
-    "abl_id": "ABL-01",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 30,
-    "mAP": 64.7149,
-    "rank1": 85.39929962158203,
-    "rank5": 93.02739715576172,
-    "rank10": 95.58999633789062
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 0,
-    "mAP": 74.2022,
-    "rank1": 94.21929931640625,
-    "rank5": 97.13939666748047,
-    "rank10": 98.5697021484375
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 3,
-    "mAP": 73.5706,
-    "rank1": 93.98090362548828,
-    "rank5": 97.07990264892578,
-    "rank10": 98.15260314941406
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 6,
-    "mAP": 73.0502,
-    "rank1": 93.74250030517578,
+    "mAP": 73.751,
+    "rank1": 93.86170196533203,
     "rank5": 97.1989974975586,
-    "rank10": 98.09300231933594
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 9,
-    "mAP": 72.4405,
-    "rank1": 92.72940063476562,
-    "rank5": 96.6626968383789,
-    "rank10": 98.03340148925781
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 12,
-    "mAP": 71.5215,
-    "rank1": 92.07389831542969,
-    "rank5": 96.24549865722656,
-    "rank10": 97.79499816894531
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 15,
-    "mAP": 71.2244,
-    "rank1": 91.7759017944336,
-    "rank5": 96.60310363769531,
-    "rank10": 97.91419982910156
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 18,
-    "mAP": 69.7467,
-    "rank1": 91.12039947509766,
-    "rank5": 95.41120147705078,
-    "rank10": 97.13939666748047
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 21,
-    "mAP": 68.647,
-    "rank1": 89.27300262451172,
-    "rank5": 95.53040313720703,
-    "rank10": 97.37779998779297
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 24,
-    "mAP": 68.0632,
-    "rank1": 88.73660278320312,
-    "rank5": 95.768798828125,
-    "rank10": 97.02030181884766
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 27,
-    "mAP": 66.2123,
-    "rank1": 86.47200012207031,
-    "rank5": 94.10009765625,
-    "rank10": 96.36470031738281
-  },
-  {
-    "model_name": "CNN+GCN 4nb L2",
-    "abl_id": "ABL-04",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 30,
-    "mAP": 64.6692,
-    "rank1": 85.5781021118164,
-    "rank5": 92.9677963256836,
-    "rank10": 95.82839965820312
-  },
-  {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
-    "occlusion_level": 0,
-    "mAP": 73.6122,
-    "rank1": 93.14659881591797,
-    "rank5": 97.1989974975586,
-    "rank10": 98.62930297851562
-  },
-  {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
-    "occlusion_level": 3,
-    "mAP": 72.9956,
-    "rank1": 92.61019897460938,
-    "rank5": 96.9011001586914,
-    "rank10": 98.27179718017578
-  },
-  {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
-    "occlusion_level": 6,
-    "mAP": 72.5364,
-    "rank1": 92.72940063476562,
-    "rank5": 97.07990264892578,
-    "rank10": 98.39089965820312
-  },
-  {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
-    "occlusion_level": 9,
-    "mAP": 71.8325,
-    "rank1": 92.13349914550781,
-    "rank5": 96.54350280761719,
-    "rank10": 97.97380065917969
-  },
-  {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
-    "occlusion_level": 12,
-    "mAP": 70.9227,
-    "rank1": 91.18000030517578,
-    "rank5": 96.78189849853516,
     "rank10": 98.21219635009766
   },
   {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
     "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
+    "occlusion_level": 6,
+    "mAP": 73.401,
+    "rank1": 93.2061996459961,
+    "rank5": 97.25859832763672,
+    "rank10": 98.27179718017578
+  },
+  {
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
+    "model_group": "ResNet50",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
+    "occlusion_level": 9,
+    "mAP": 72.5692,
+    "rank1": 93.02739715576172,
+    "rank5": 96.96070098876953,
+    "rank10": 97.97380065917969
+  },
+  {
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
+    "model_group": "ResNet50",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
+    "occlusion_level": 12,
+    "mAP": 71.8553,
+    "rank1": 92.37190246582031,
+    "rank5": 96.6626968383789,
+    "rank10": 97.85459899902344
+  },
+  {
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
+    "model_group": "ResNet50",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
     "occlusion_level": 15,
-    "mAP": 70.4284,
-    "rank1": 91.2396011352539,
+    "mAP": 71.1505,
+    "rank1": 91.5374984741211,
+    "rank5": 95.768798828125,
+    "rank10": 97.85459899902344
+  },
+  {
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
+    "model_group": "ResNet50",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
+    "occlusion_level": 18,
+    "mAP": 69.9481,
+    "rank1": 91.0011978149414,
+    "rank5": 96.36470031738281,
+    "rank10": 97.85459899902344
+  },
+  {
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
+    "model_group": "ResNet50",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
+    "occlusion_level": 21,
+    "mAP": 68.8392,
+    "rank1": 89.51129913330078,
+    "rank5": 95.4708023071289,
+    "rank10": 97.07990264892578
+  },
+  {
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
+    "model_group": "ResNet50",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
+    "occlusion_level": 24,
+    "mAP": 68.6128,
+    "rank1": 89.98809814453125,
+    "rank5": 95.35160064697266,
+    "rank10": 97.49700164794922
+  },
+  {
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
+    "model_group": "ResNet50",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
+    "occlusion_level": 27,
+    "mAP": 66.5122,
+    "rank1": 85.93560028076172,
+    "rank5": 94.15969848632812,
+    "rank10": 96.42430114746094
+  },
+  {
+    "model_name": "CNN+GCN 4nb L3",
+    "abl_id": "ABL-05",
+    "model_group": "ResNet50",
+    "description": "ResNet50-IBN + 4-neighbor + 3 layer GCN",
+    "occlusion_level": 30,
+    "mAP": 65.0935,
+    "rank1": 85.69730377197266,
+    "rank5": 93.26580047607422,
+    "rank10": 95.94760131835938
+  },
+  {
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 0,
+    "mAP": 72.8176,
+    "rank1": 94.69609832763672,
+    "rank5": 97.91419982910156,
+    "rank10": 98.98690032958984
+  },
+  {
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 3,
+    "mAP": 72.3157,
+    "rank1": 93.86170196533203,
+    "rank5": 97.97380065917969,
+    "rank10": 98.98690032958984
+  },
+  {
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 6,
+    "mAP": 71.9098,
+    "rank1": 93.74250030517578,
+    "rank5": 97.61620330810547,
+    "rank10": 98.74849700927734
+  },
+  {
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 9,
+    "mAP": 71.3752,
+    "rank1": 92.9677963256836,
+    "rank5": 97.49700164794922,
+    "rank10": 98.5697021484375
+  },
+  {
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 12,
+    "mAP": 70.894,
+    "rank1": 93.2061996459961,
+    "rank5": 97.55660247802734,
+    "rank10": 98.8676986694336
+  },
+  {
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 15,
+    "mAP": 69.793,
+    "rank1": 92.19309997558594,
+    "rank5": 97.02030181884766,
+    "rank10": 98.39089965820312
+  },
+  {
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 18,
+    "mAP": 68.7895,
+    "rank1": 90.94159698486328,
+    "rank5": 96.42430114746094,
+    "rank10": 98.15260314941406
+  },
+  {
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 21,
+    "mAP": 68.2155,
+    "rank1": 91.06079864501953,
     "rank5": 96.36470031738281,
     "rank10": 97.79499816894531
   },
   {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
-    "occlusion_level": 18,
-    "mAP": 69.0435,
-    "rank1": 90.76280212402344,
-    "rank5": 95.88800048828125,
-    "rank10": 97.31819915771484
-  },
-  {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
-    "occlusion_level": 21,
-    "mAP": 67.8963,
-    "rank1": 89.69010162353516,
-    "rank5": 95.35160064697266,
-    "rank10": 96.84149932861328
-  },
-  {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
     "occlusion_level": 24,
-    "mAP": 67.0491,
-    "rank1": 87.96189880371094,
-    "rank5": 94.75569915771484,
-    "rank10": 96.96070098876953
-  },
-  {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
-    "occlusion_level": 27,
-    "mAP": 64.8259,
-    "rank1": 85.8759994506836,
-    "rank5": 93.74250030517578,
-    "rank10": 96.06680297851562
-  },
-  {
-    "model_name": "CNN+GCN kNN L1",
-    "abl_id": "ABL-08",
-    "model_group": "ResNet50",
-    "description": "ResNet50-IBN + kNN(k=8) + 1 layer GCN",
-    "occlusion_level": 30,
-    "mAP": 63.6366,
-    "rank1": 84.14779663085938,
-    "rank5": 92.49109649658203,
-    "rank10": 95.58999633789062
+    "mAP": 67.2313,
+    "rank1": 89.92849731445312,
+    "rank5": 95.88800048828125,
+    "rank10": 97.73539733886719
   },
   {
     "model_name": "ViT+GCN 4nb L1",
     "abl_id": "ABL-02",
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 27,
+    "mAP": 65.5309,
+    "rank1": 88.73660278320312,
+    "rank5": 95.11319732666016,
+    "rank10": 97.73539733886719
+  },
+  {
+    "model_name": "ViT+GCN 4nb L1",
+    "abl_id": "ABL-02",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "occlusion_level": 30,
+    "mAP": 65.1272,
+    "rank1": 88.55780029296875,
+    "rank5": 94.51730346679688,
+    "rank10": 96.72229766845703
+  },
+  {
+    "model_name": "ViT+GCN 4nb L2",
+    "abl_id": "ABL-11",
+    "model_group": "ViT-Base",
+    "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 0,
-    "mAP": 72.2381,
-    "rank1": 93.74250030517578,
-    "rank5": 97.85459899902344,
+    "mAP": 72.3393,
+    "rank1": 93.92130279541016,
+    "rank5": 97.55660247802734,
     "rank10": 98.80809783935547
   },
   {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
+    "model_name": "ViT+GCN 4nb L2",
+    "abl_id": "ABL-11",
     "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 3,
-    "mAP": 71.7616,
-    "rank1": 93.74250030517578,
-    "rank5": 97.37779998779297,
-    "rank10": 98.74849700927734
+    "mAP": 71.7216,
+    "rank1": 93.38500213623047,
+    "rank5": 97.31819915771484,
+    "rank10": 98.5697021484375
   },
   {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
+    "model_name": "ViT+GCN 4nb L2",
+    "abl_id": "ABL-11",
     "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 6,
-    "mAP": 71.449,
-    "rank1": 93.50420379638672,
-    "rank5": 97.49700164794922,
+    "mAP": 71.4294,
+    "rank1": 93.32540130615234,
+    "rank5": 97.4374008178711,
     "rank10": 98.62930297851562
   },
   {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
+    "model_name": "ViT+GCN 4nb L2",
+    "abl_id": "ABL-11",
     "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
+    "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 9,
-    "mAP": 70.6873,
-    "rank1": 92.43150329589844,
-    "rank5": 97.07990264892578,
-    "rank10": 98.5697021484375
-  },
-  {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 12,
-    "mAP": 70.4308,
-    "rank1": 92.43150329589844,
-    "rank5": 97.49700164794922,
-    "rank10": 98.68890380859375
-  },
-  {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 15,
-    "mAP": 69.5574,
-    "rank1": 91.47799682617188,
+    "mAP": 70.8486,
+    "rank1": 91.89510345458984,
     "rank5": 97.02030181884766,
-    "rank10": 98.45050048828125
-  },
-  {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 18,
-    "mAP": 68.2599,
-    "rank1": 90.76280212402344,
-    "rank5": 96.48390197753906,
-    "rank10": 98.09300231933594
-  },
-  {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 21,
-    "mAP": 67.6442,
-    "rank1": 90.94159698486328,
-    "rank5": 96.18589782714844,
-    "rank10": 98.09300231933594
-  },
-  {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 24,
-    "mAP": 66.9563,
-    "rank1": 90.64360046386719,
-    "rank5": 96.06680297851562,
-    "rank10": 98.15260314941406
-  },
-  {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 27,
-    "mAP": 65.5935,
-    "rank1": 88.20020294189453,
-    "rank5": 94.99400329589844,
-    "rank10": 97.13939666748047
-  },
-  {
-    "model_name": "ViT+GCN 4nb L1",
-    "abl_id": "ABL-02",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 1 layer GCN",
-    "occlusion_level": 30,
-    "mAP": 64.4848,
-    "rank1": 87.48509979248047,
-    "rank5": 95.17279815673828,
-    "rank10": 97.49700164794922
-  },
-  {
-    "model_name": "ViT+GCN 4nb L2",
-    "abl_id": "ABL-11",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 0,
-    "mAP": 72.7077,
-    "rank1": 94.10009765625,
-    "rank5": 97.31819915771484,
-    "rank10": 98.51010131835938
-  },
-  {
-    "model_name": "ViT+GCN 4nb L2",
-    "abl_id": "ABL-11",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 3,
-    "mAP": 72.2221,
-    "rank1": 93.86170196533203,
-    "rank5": 97.25859832763672,
-    "rank10": 98.5697021484375
-  },
-  {
-    "model_name": "ViT+GCN 4nb L2",
-    "abl_id": "ABL-11",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 6,
-    "mAP": 72.0243,
-    "rank1": 93.08699798583984,
-    "rank5": 96.78189849853516,
-    "rank10": 98.74849700927734
-  },
-  {
-    "model_name": "ViT+GCN 4nb L2",
-    "abl_id": "ABL-11",
-    "model_group": "ViT-Base",
-    "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
-    "occlusion_level": 9,
-    "mAP": 71.2583,
-    "rank1": 92.72940063476562,
-    "rank5": 96.96070098876953,
-    "rank10": 98.68890380859375
+    "rank10": 98.331298828125
   },
   {
     "model_name": "ViT+GCN 4nb L2",
@@ -533,10 +291,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 12,
-    "mAP": 70.7115,
-    "rank1": 92.84860229492188,
-    "rank5": 96.60310363769531,
-    "rank10": 98.45050048828125
+    "mAP": 70.4025,
+    "rank1": 92.37190246582031,
+    "rank5": 96.78189849853516,
+    "rank10": 98.39089965820312
   },
   {
     "model_name": "ViT+GCN 4nb L2",
@@ -544,10 +302,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 15,
-    "mAP": 69.8124,
-    "rank1": 92.25270080566406,
-    "rank5": 96.48390197753906,
-    "rank10": 98.15260314941406
+    "mAP": 69.6115,
+    "rank1": 92.37190246582031,
+    "rank5": 96.9011001586914,
+    "rank10": 98.27179718017578
   },
   {
     "model_name": "ViT+GCN 4nb L2",
@@ -555,10 +313,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 18,
-    "mAP": 69.3019,
-    "rank1": 91.7759017944336,
-    "rank5": 96.48390197753906,
-    "rank10": 98.03340148925781
+    "mAP": 68.677,
+    "rank1": 91.06079864501953,
+    "rank5": 96.18589782714844,
+    "rank10": 97.91419982910156
   },
   {
     "model_name": "ViT+GCN 4nb L2",
@@ -566,10 +324,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 21,
-    "mAP": 68.1207,
-    "rank1": 90.64360046386719,
-    "rank5": 95.88800048828125,
-    "rank10": 97.85459899902344
+    "mAP": 67.8862,
+    "rank1": 90.94159698486328,
+    "rank5": 95.94760131835938,
+    "rank10": 97.55660247802734
   },
   {
     "model_name": "ViT+GCN 4nb L2",
@@ -577,10 +335,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 24,
-    "mAP": 67.3416,
-    "rank1": 89.8093032836914,
-    "rank5": 96.0072021484375,
-    "rank10": 97.61620330810547
+    "mAP": 67.1726,
+    "rank1": 89.27300262451172,
+    "rank5": 95.58999633789062,
+    "rank10": 97.91419982910156
   },
   {
     "model_name": "ViT+GCN 4nb L2",
@@ -588,10 +346,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 27,
-    "mAP": 65.7781,
-    "rank1": 88.4385986328125,
-    "rank5": 95.4708023071289,
-    "rank10": 97.67579650878906
+    "mAP": 65.4607,
+    "rank1": 89.27300262451172,
+    "rank5": 95.70919799804688,
+    "rank10": 96.84149932861328
   },
   {
     "model_name": "ViT+GCN 4nb L2",
@@ -599,10 +357,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + 4-neighbor + 2 layer GCN",
     "occlusion_level": 30,
-    "mAP": 65.0148,
-    "rank1": 87.84269714355469,
-    "rank5": 94.39810180664062,
-    "rank10": 96.42430114746094
+    "mAP": 64.7639,
+    "rank1": 87.18710327148438,
+    "rank5": 94.27890014648438,
+    "rank10": 96.96070098876953
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -610,10 +368,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 0,
-    "mAP": 72.4726,
-    "rank1": 94.51730346679688,
-    "rank5": 97.67579650878906,
-    "rank10": 99.04650115966797
+    "mAP": 72.6729,
+    "rank1": 94.27890014648438,
+    "rank5": 97.73539733886719,
+    "rank10": 98.8676986694336
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -621,9 +379,9 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 3,
-    "mAP": 71.9302,
-    "rank1": 94.10009765625,
-    "rank5": 97.91419982910156,
+    "mAP": 72.1305,
+    "rank1": 94.27890014648438,
+    "rank5": 97.73539733886719,
     "rank10": 98.8676986694336
   },
   {
@@ -632,10 +390,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 6,
-    "mAP": 71.6552,
-    "rank1": 93.56379699707031,
-    "rank5": 97.67579650878906,
-    "rank10": 98.92729949951172
+    "mAP": 71.888,
+    "rank1": 93.68299865722656,
+    "rank5": 97.55660247802734,
+    "rank10": 98.62930297851562
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -643,10 +401,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 9,
-    "mAP": 71.0699,
-    "rank1": 93.62339782714844,
-    "rank5": 97.37779998779297,
-    "rank10": 98.68890380859375
+    "mAP": 71.2536,
+    "rank1": 93.32540130615234,
+    "rank5": 97.31819915771484,
+    "rank10": 98.5697021484375
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -654,10 +412,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 12,
-    "mAP": 70.463,
-    "rank1": 93.08699798583984,
-    "rank5": 97.31819915771484,
-    "rank10": 98.68890380859375
+    "mAP": 70.5529,
+    "rank1": 92.25270080566406,
+    "rank5": 97.25859832763672,
+    "rank10": 98.74849700927734
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -665,10 +423,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 15,
-    "mAP": 69.7673,
-    "rank1": 92.78900146484375,
-    "rank5": 97.07990264892578,
-    "rank10": 98.80809783935547
+    "mAP": 69.7102,
+    "rank1": 92.43150329589844,
+    "rank5": 97.1989974975586,
+    "rank10": 98.39089965820312
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -676,10 +434,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 18,
-    "mAP": 68.6906,
-    "rank1": 91.18000030517578,
-    "rank5": 97.25859832763672,
-    "rank10": 98.45050048828125
+    "mAP": 68.7608,
+    "rank1": 91.41840362548828,
+    "rank5": 96.54350280761719,
+    "rank10": 97.97380065917969
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -687,10 +445,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 21,
-    "mAP": 67.8788,
-    "rank1": 91.0011978149414,
-    "rank5": 96.48390197753906,
-    "rank10": 98.45050048828125
+    "mAP": 67.9941,
+    "rank1": 91.18000030517578,
+    "rank5": 96.06680297851562,
+    "rank10": 98.09300231933594
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -698,10 +456,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 24,
-    "mAP": 67.0572,
-    "rank1": 90.28600311279297,
-    "rank5": 96.42430114746094,
-    "rank10": 97.91419982910156
+    "mAP": 67.0333,
+    "rank1": 90.58399963378906,
+    "rank5": 96.06680297851562,
+    "rank10": 97.73539733886719
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -709,10 +467,10 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 27,
-    "mAP": 65.6073,
-    "rank1": 89.27300262451172,
-    "rank5": 95.17279815673828,
-    "rank10": 97.67579650878906
+    "mAP": 65.6785,
+    "rank1": 89.74970245361328,
+    "rank5": 95.58999633789062,
+    "rank10": 97.73539733886719
   },
   {
     "model_name": "ViT+GCN kNN L1",
@@ -720,9 +478,9 @@
     "model_group": "ViT-Base",
     "description": "ViT-Base-768 + kNN(k=8) + 1 layer GCN",
     "occlusion_level": 30,
-    "mAP": 64.7606,
-    "rank1": 88.79620361328125,
-    "rank5": 94.6364974975586,
-    "rank10": 97.02030181884766
+    "mAP": 64.9148,
+    "rank1": 88.37899780273438,
+    "rank5": 95.05359649658203,
+    "rank10": 97.13939666748047
   }
 ]
