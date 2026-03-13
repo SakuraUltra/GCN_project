@@ -1,0 +1,67 @@
+DATA:
+  ROOT: data/dataset/VehicleID_V1.0
+  BATCH_SIZE: 64
+  NUM_WORKERS: 24
+  USE_PK_SAMPLER: true
+  P: 16
+  K: 4
+  TEST_SIZE: small
+  AUGMENTATION:
+    TYPE: random_erasing
+    PROBABILITY: 0.5
+    PARAMS:
+      sl: 0.02
+      sh: 0.2
+      r1: 0.3
+      r2: 3.33
+      mode: random
+MODEL:
+  NAME: BoTGCN
+  BACKBONE: resnet50_ibn_a
+  PRETRAINED: true
+  PRETRAINED_PATH: outputs/bot_baseline_1_1/VehicleID/baseline_run_01/best_model.pth
+  NUM_CLASSES: 13164
+  FEATURE_DIM: 2048
+  LAST_STRIDE: 1
+  GCN:
+    USE_GCN: true
+    GRID_H: 4
+    GRID_W: 4
+    ADJACENCY_TYPE: '4'
+    HIDDEN_CHANNELS: 512
+    OUT_CHANNELS: null
+    NUM_LAYERS: 3
+    DROPOUT: 0.5
+    KNN_K: 8
+    KNN_METRIC: cosine
+    KNN_DETACH: true
+    GNN_TYPE: gcn
+    POOLING_TYPE: mean
+    POOLING_HIDDEN_DIM: 128
+  FUSION:
+    TYPE: concat
+    HIDDEN_DIM: 512
+    DROPOUT: 0.5
+OPTIMIZER:
+  NAME: AdamW
+  BASE_LR: 0.00035
+  WEIGHT_DECAY: 0.0005
+  EPS: 1.0e-08
+SCHEDULER:
+  NAME: WarmupCosineAnnealingLR
+  WARMUP_EPOCHS: 10
+LOSS:
+  LABEL_SMOOTH: 0.1
+  TRIPLET_MARGIN: 0.3
+  ID_LOSS_WEIGHT: 1.0
+  TRIPLET_LOSS_WEIGHT: 1.0
+EPOCHS: 120
+EVAL_PERIOD: 10
+LOG_PERIOD: 100
+AUGMENTATION:
+  RANDOM_ERASING: true
+  RANDOM_ERASING_PROB: 0.5
+USE_AMP: false
+OUTPUT:
+  DIR: outputs/ablation_vehicleid/cnn_gcn_4nb_l3
+SEED: 42

@@ -221,13 +221,19 @@ def build_model(config, num_classes, args):
     gcn_config = model_config.get('GCN', {})
     fusion_config = model_config.get('FUSION', {})
     
-    # 兼容两种 BACKBONE 格式：字符串(ResNet)或字典(ViT)
+    # 兼容两种 BACKBONE 格式：字符串或字典
     backbone_config = model_config.get('BACKBONE', {})
-    backbone_type = 'vit'  # 默认使用 ViT
     if isinstance(backbone_config, str):
-        # 旧格式：BACKBONE 直接是字符串(ResNet)
-        backbone_type = 'resnet'
+        # 字符串格式：根据名称判断类型
+        backbone_name = backbone_config.lower()
+        if 'vit' in backbone_name or 'deit' in backbone_name:
+            backbone_type = 'vit'
+        else:
+            backbone_type = 'resnet'
         backbone_config = {}
+    else:
+        # 字典格式：默认使用 ViT
+        backbone_type = 'vit'
     
     model_params = {
         'num_classes': num_classes,
@@ -645,7 +651,14 @@ def main():
     epochs = config.get('TRAIN', {}).get('EPOCHS', config.get('EPOCHS', 120))
     eval_period = config.get('TRAIN', {}).get('EVAL_PERIOD', config.get('EVAL_PERIOD', 20))
     
+    # 早停机制
+    patience = config.get('EARLY_STOPPING', {}).get('PATIENCE', 30)
+    min_delta = config.get('EARLY_STOPPING', {}).get('MIN_DELTA', 0.001)
+    epochs_no_improve = 0
+    
     logger.info("Starting training...")
+    if patience < epochs:
+        logger.info(f"Early stopping enabled: patience={patience}, min_delta={min_delta}")
     
     for epoch in range(start_epoch, epochs + 1):
         # 训练
@@ -674,8 +687,9 @@ def main():
                        f"Rank-5: {rank5:.4f}, Rank-10: {rank10:.4f}")
             
             # 保存最佳模型
-            if mAP > best_mAP:
+            if mAP > best_mAP + min_delta:
                 best_mAP = mAP
+                epochs_no_improve = 0
                 torch.save({
                     'epoch': epoch,
                     'model': model.state_dict(),
@@ -685,6 +699,15 @@ def main():
                     'config': config
                 }, output_dir / 'best_model.pth')
                 logger.info(f"New best model saved! mAP: {mAP:.4f}")
+            else:
+                epochs_no_improve += eval_period
+                logger.info(f"No improvement for {epochs_no_improve} epochs (best mAP: {best_mAP:.4f})")
+                
+                # 早停检查
+                if epochs_no_improve >= patience:
+                    logger.info(f"Early stopping triggered! No improvement for {patience} epochs.")
+                    logger.info(f"Best mAP: {best_mAP:.4f} at epoch {epoch - epochs_no_improve}")
+                    break
         
         # 定期保存checkpoint
         if epoch % 20 == 0:

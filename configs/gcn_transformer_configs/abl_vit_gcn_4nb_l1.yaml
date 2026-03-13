@@ -31,6 +31,7 @@ MODEL:
     TYPE: "vit_native"
     NAME: "vit_base_patch16_224.augreg_in21k_ft_in1k"
     PRETRAINED: true
+    PRETRAINED_PATH: "outputs/bot_vitbase_baseline_776/best_model.pth"
     NATIVE_DIM: true            # 使用原生768维，不升维到2048
   NUM_CLASSES: 576
   FEATURE_DIM: 768              # ViT-Base native 维度

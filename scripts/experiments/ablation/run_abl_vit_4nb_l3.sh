@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=abl_vit_4nb_l3
-#SBATCH --partition=gpuplus
-#SBATCH --gres=gpu:h100:1
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=48:00:00
