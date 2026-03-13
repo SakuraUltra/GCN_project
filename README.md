@@ -331,6 +331,7 @@ This project is licensed under the MIT License.
 ## 📧 Contact
 
 For questions, collaboration, or pre-trained weights:
+- Email: sl3753@york.ac.uk
 - GitHub Issues: [Create an issue](https://github.com/SakuraUltra/GCN_project/issues)
 - Repository: [https://github.com/SakuraUltra/GCN_project](https://github.com/SakuraUltra/GCN_project)
 
